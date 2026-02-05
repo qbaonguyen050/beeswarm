@@ -298,8 +298,8 @@ function BeeSwarmSimulator(DATA){
     let passiveActivationPopup=document.getElementById('passiveActivationPopup')
     let pollenAmount=document.getElementById('pollenAmount')
     let honeyAmount=document.getElementById('honeyAmount')
-    let pollenAmount2=document.getElementById('pollenAmount2')
-    let honeyAmount2=document.getElementById('honeyAmount2')
+    let pollenAmount2=document.getElementById('pollenAmount2') || { style: {} };
+    let honeyAmount2=document.getElementById('honeyAmount2') || { style: {} };
     let healthBar=document.getElementById('healthBar')
     let capacityBar=document.getElementById('capacityBar')
     let inventoryButton=document.getElementById('inventoryButton')
@@ -25243,20 +25243,30 @@ function BeeSwarmSimulator(DATA){
             out.honey=Math.round(out.honey)
 
             let b4=pollenAmount.textContent.length
-            pollenAmount2.textContent=pollenAmount.textContent=MATH.addCommas((out.pollen).toString())+'/'+MATH.addCommas(player.capacity.toString())
-            honeyAmount2.textContent=honeyAmount.textContent=MATH.addCommas((out.honey).toString())
+            pollenAmount.textContent=MATH.addCommas((out.pollen).toString())+'/'+MATH.addCommas(player.capacity.toString())
+            if(pollenAmount2.style) pollenAmount2.textContent = pollenAmount.textContent;
+            honeyAmount.textContent=MATH.addCommas((out.honey).toString())
+            if(honeyAmount2.style) honeyAmount2.textContent = honeyAmount.textContent;
 
             if(pollenAmount.textContent.length!==b4){
                 let s=(Math.min(23/pollenAmount.textContent.length,1)*16)
-                pollenAmount.style.fontSize=pollenAmount2.style.fontSize=s+'px'
-                pollenAmount.style.transform=pollenAmount2.style.transform='translate(0px,-'+((16-s)*0.175)+'px)'
+                pollenAmount.style.fontSize=s+'px'
+                if(pollenAmount2.style) {
+                    pollenAmount2.style.fontSize=s+'px'
+                    pollenAmount.style.transform=pollenAmount2.style.transform='translate(0px,-'+((16-s)*0.175)+'px)'
+                }
             }
 
 
             let p=Math.min(out.pollen/out.capacity,1)
 
-            capacityBar.setAttribute('width',p*196)
-            capacityBar.style.fill='rgb('+p*255*1.5+','+(1-p)*255*1.5+',0)'
+            if (capacityBar.tagName.toLowerCase() === 'rect') {
+                capacityBar.setAttribute('width',p*196)
+                capacityBar.style.fill='rgb('+p*255*1.5+','+(1-p)*255*1.5+',0)'
+            } else {
+                capacityBar.style.width = (p * 100) + '%';
+                capacityBar.style.backgroundColor = 'rgb('+p*255*1.5+','+(1-p)*255*1.5+',0)';
+            }
             out.health=Math.min(out.health+dt*2.5,100)
 
             if(out.health<=0||out.body.position.y<-50){
@@ -25284,8 +25294,13 @@ function BeeSwarmSimulator(DATA){
                 ctx.fillRect(0,0,width,height)
             }
 
-            healthBar.setAttribute('width',out.health*0.72)
-            healthBar.style.fill='rgb('+(100-out.health)*3.75+','+out.health*3.75+',0)'
+            if (healthBar.tagName.toLowerCase() === 'rect') {
+                healthBar.setAttribute('width',out.health*0.72)
+                healthBar.style.fill='rgb('+(100-out.health)*3.75+','+out.health*3.75+',0)'
+            } else {
+                healthBar.style.width = out.health + '%';
+                healthBar.style.backgroundColor = 'rgb('+(100-out.health)*3.75+','+out.health*3.75+',0)';
+            }
 
             if(user.clickedKeys.r&&out.sprinklers.length){
 
@@ -29750,6 +29765,21 @@ function BeeSwarmSimulator(DATA){
                 this.collected=true
                 this.life=0.75
                 player.stats.abilityTokens++
+
+                if (window.AudioManager) {
+                    if (this.type.includes('Bomb')) {
+                        AudioManager.play('music_bombToken');
+                    } else if (this.type.includes('Haste')) {
+                        AudioManager.play('music_haste');
+                    } else if (this.type.includes('Focus')) {
+                        AudioManager.play('music_focusToken');
+                    } else if (this.type.includes('Boost')) {
+                        AudioManager.play('music_boostToken');
+                    } else {
+                        // Try playing by type name if file exists
+                        AudioManager.play('music_' + this.type + (this.type.endsWith('Token') ? '' : 'Token'));
+                    }
+                }
 
                 if(effects[this.type].statsToAddTo){
 

@@ -1,6 +1,35 @@
+// Register Service Worker for offline support
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('Service Worker registered'))
+            .catch(err => console.log('Service Worker registration failed', err));
+    });
+}
+
+function injectIcons() {
+    if (!window.ICONS) return;
+    for (const [id, content] of Object.entries(window.ICONS)) {
+        const el = document.getElementById(id);
+        if (el && el.tagName.toLowerCase() === 'svg') {
+            el.innerHTML = content;
+        }
+    }
+}
+
 async function main(){
     try {
+        injectIcons();
         await runMain();
+        // Hide loading screen after everything is initialized
+        const ls = document.getElementById('loadingScreen');
+        if (ls) {
+            setTimeout(() => {
+                ls.style.transition = 'opacity 0.5s';
+                ls.style.opacity = '0';
+                setTimeout(() => ls.style.display = 'none', 500);
+            }, 1000);
+        }
     } catch (e) {
         console.error("Critical error in main loop:", e);
         alert("A critical error occurred while starting the game: " + e.message);
