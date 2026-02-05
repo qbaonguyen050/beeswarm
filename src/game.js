@@ -575,7 +575,7 @@ function BeeSwarmSimulator(DATA){
             }
 
             document.getElementById('saveGame').onclick=function(){
-                if(out.testMode){
+                if(player.testMode){
                     player.addMessage('Saving is disabled in Test Mode!', COLORS.redArr)
                     return
                 }
@@ -7903,7 +7903,7 @@ function BeeSwarmSimulator(DATA){
 
                 if(player.antChallenge){
 
-                    out.endAntChallenge()
+                    player.endAntChallenge()
                     return
                 }
 
@@ -33697,7 +33697,7 @@ function BeeSwarmSimulator(DATA){
     }
 
     function SAVE_GAME(){
-        if(out.testMode) return;
+        if(player.testMode) return;
 
         let code=GENERATE_SAVE_CODE()
 
