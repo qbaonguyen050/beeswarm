@@ -575,7 +575,10 @@ function BeeSwarmSimulator(DATA){
             }
 
             document.getElementById('saveGame').onclick=function(){
-
+                if(out.testMode){
+                    player.addMessage('Saving is disabled in Test Mode!', COLORS.redArr)
+                    return
+                }
                 SAVE_GAME()
                 player.addMessage('Game Saved!')
             }
@@ -583,6 +586,48 @@ function BeeSwarmSimulator(DATA){
             document.getElementById('resetChar').onclick=function(){
 
                 player.health=-100
+            }
+
+            document.getElementById('exportSave').onclick=function(){
+                let code = GENERATE_SAVE_CODE();
+                let blob = new Blob([code], {type: 'text/plain'});
+                let url = URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = 'bss_save_' + Date.now() + '.txt';
+                a.click();
+                player.addMessage('Save file exported!');
+            }
+
+            document.getElementById('toggleDayNight').onclick=function(){
+                player.forceDay = !player.forceDay;
+                player.targetLight = player.forceDay ? 1 : 0.2;
+                player.addMessage('Light toggled!');
+            }
+
+            document.getElementById('importSave').onclick=function(){
+                let input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.txt';
+                input.onchange = e => {
+                    let file = e.target.files[0];
+                    if (!file) return;
+                    let reader = new FileReader();
+                    reader.onload = readerEvent => {
+                        let content = readerEvent.target.result;
+                        if(confirm("Importing a save will overwrite your current save and reload the game. Continue?")) {
+                            saveToDB(DATA.id, {
+                                lastSaved: Date.now(),
+                                saveCode: content.trim(),
+                                name: DATA.name
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        }
+                    }
+                    reader.readAsText(file);
+                }
+                input.click();
             }
 
             document.getElementById('autoJellySettingsUntil').onclick=function(){
@@ -23592,7 +23637,7 @@ function BeeSwarmSimulator(DATA){
 
                     let c=cost[i].split(' ')
 
-                    if(c[1]==='honey'&&player.honey<Number(c[0])||c[1]!=='honey'&&items[c[1]].amount<Number(c[0])){
+                    if(!out.testMode && (c[1]==='honey'&&player.honey<Number(c[0])||c[1]!=='honey'&&items[c[1]].amount<Number(c[0]))){
 
                         return
                     }
@@ -23829,6 +23874,7 @@ function BeeSwarmSimulator(DATA){
 
         out.hive=[[]]
         out.hivePos=[-1.625+9,1.5,-7.5]
+        out.testMode = window.testMode
 
         let ht=triggers.hive={
 
@@ -23838,6 +23884,16 @@ function BeeSwarmSimulator(DATA){
             maxY:7,
             minZ:out.hivePos[2]-1,
             maxZ:out.hivePos[2]+4.5,
+            isMachine:true,
+            message:'Make Honey',
+            requirements:function(player){
+                if(player.pollen<=0 && (!player.hiveBalloon || player.hiveBalloon.pollen <= 0)) return 'Backpack is empty'
+            },
+            func:function(player){
+                player.stopConverting=false
+                player.converting=true
+                player.convertingBalloon=true
+            }
         }
         triggers.hiveEffects.minX=ht.minX-25
         triggers.hiveEffects.maxX=ht.maxX+25
@@ -25001,10 +25057,23 @@ function BeeSwarmSimulator(DATA){
 
             playerMesh.setMeshFromFunction(function(box,a,cylinder,sphere,applyFinalRotation,c,star){
 
-                box(0,0,0,0.5,1,0.5,false,[1.45,1.45,1])
+                // Detailed Roblox-style Character
+                // Head
+                box(0, 0.45, 0, 0.3, 0.3, 0.3, false, [1.5, 1.5, 0])
+                // Eyes
+                box(0.08, 0.5, 0.15, 0.05, 0.05, 0.02, false, [0, 0, 0])
+                box(-0.08, 0.5, 0.15, 0.05, 0.05, 0.02, false, [0, 0, 0])
 
-                //eeeeeeeeeeeeeeeeeeeeee
-                // box(0,0,0,3,0.1,3,false,[0,2,0])
+                // Torso
+                box(0, 0, 0, 0.45, 0.6, 0.25, false, [0, 0.5, 1.5])
+
+                // Arms
+                box(0.35, 0, 0, 0.2, 0.6, 0.2, false, [1.5, 1.5, 0])
+                box(-0.35, 0, 0, 0.2, 0.6, 0.2, false, [1.5, 1.5, 0])
+
+                // Legs
+                box(0.12, -0.55, 0, 0.2, 0.5, 0.2, false, [0, 1.5, 0])
+                box(-0.12, -0.55, 0, 0.2, 0.5, 0.2, false, [0, 1.5, 0])
 
                 let totalAmulets=0,currentAmulet=0
 
@@ -25192,6 +25261,8 @@ function BeeSwarmSimulator(DATA){
         out._flowerIn={}
         out.pollen=0
         out.honey=0
+        out.sessionHoney=0
+        out.lastHoney=0
 
         out.cameraRaycastPoint=new CANNON.Vec3()
         out.cameraRaycastResult=new CANNON.RaycastResult()
@@ -25241,6 +25312,11 @@ function BeeSwarmSimulator(DATA){
             out.pollen=Math.round(Math.max(out.pollen,0))
             out.capacity=Math.round(out.capacity)
             out.honey=Math.round(out.honey)
+
+            if(out.honey > out.lastHoney) {
+                out.sessionHoney += (out.honey - out.lastHoney);
+            }
+            out.lastHoney = out.honey;
 
             let b4=pollenAmount.textContent.length
             pollenAmount.textContent=MATH.addCommas((out.pollen).toString())+'/'+MATH.addCommas(player.capacity.toString())
@@ -25383,7 +25459,7 @@ function BeeSwarmSimulator(DATA){
             if(currentPage===3&&TIME-player.statsStringLastUpdate>0.2){
 
                 player.statsStringLastUpdate=TIME
-                statString.innerHTML='<br>FPS: '+(1/dt).toFixed(2)+'<br>Delta Time: '+dt.toFixed(4)+'<br>Particle Count: '+ParticleRenderer.particles.length+'<br>Token Count: '+objects.tokens.length+'<br>Entity Count: '+(objects.bees.length+objects.tempBees.length+objects.bees.length+objects.tokens.length+objects.mobs.length+objects.explosions.length+objects.flames.length+objects.bubbles.length+objects.marks.length+objects.triangulates.length+objects.fuzzBombs.length+objects.balloons.length+objects.targets.length+objects.planters.length)+'<br><br>Convert Rate: '+Math.round(player.convertRate*100)+'%<br>Red Pollen: '+Math.round(player.redPollen*100)+'%<br>Blue Pollen: '+Math.round(player.bluePollen*100)+'%<br>White Pollen: '+Math.round(player.whitePollen*100)+'%<br>Capacity Multiplier: '+Math.round(player.capacityMultiplier*100)+'%<br>Walk Speed: '+player.walkSpeed.toFixed(1)+'<br>Jump Power: '+player.jumpPower.toFixed(1)+'<br>Instant Red Conversion: '+Math.round(player.instantRedConversion*100)+'%<br>Instant Blue Conversion: '+Math.round(player.instantBlueConversion*100)+'%<br>Instant White Conversion: '+Math.round(player.instantWhiteConversion*100)+'%<br>Instant Flame Conversion: '+Math.round(player.instantFlameConversion*100)+'%<br>Critical Chance: '+Math.round(player.criticalChance*100)+'%<br>Critical Power: '+Math.round(player.criticalPower*100)+'%<br>Super-Crit Chance: '+Math.round(player.superCritChance*100)+'%<br>Super-Crit Power: '+Math.round(player.superCritPower*100)+'%<br>Goo: '+Math.round(player.goo*100)+'%<br>Flame Pollen: '+Math.round(player.flamePollen*100)+'%<br>Flame Life: '+Math.round(player.flameLife*100)+'%<br>Bubble Pollen: '+Math.round(player.bubblePollen*100)+'%<br>Pollen From Tools: '+Math.round(player.pollenFromTools*100)+'%<br>Pollen From Bees: '+Math.round(player.pollenFromBees*100)+'%<br>White Bomb Pollen: '+Math.round(player.whiteBombPollen*100)+'%<br>Red Bomb Pollen: '+Math.round(player.redBombPollen*100)+'%<br>Blue Bomb Pollen: '+Math.round(player.blueBombPollen*100)+'%<br>White Bee Attack: '+player.whiteBeeAttack+'<br>Blue Bee Attack: '+player.blueBeeAttack+'<br>Red Bee Attack: '+player.redBeeAttack+'<br>Bee Attack Multiplier: '+Math.round(player.beeAttack*100)+'%<br>Honey From Tokens: '+Math.round(player.honeyFromTokens*100)+'%<br>Red Bee Ability Rate: '+Math.round(player.redBeeAbilityRate*100)+'%<br>Blue Bee Ability Rate: '+Math.round(player.blueBeeAbilityRate*100)+'%<br>White Bee Ability Rate: '+Math.round(player.whiteBeeAbilityRate*100)+'%<br>Bee Movespeed: '+Math.round(player.beeSpeed*100)+'%<br>Bee Energy: '+Math.round(player.beeEnergy*100)+'%<br>Honey At Hive: '+Math.round(player.honeyAtHive*100)+'%<br>Honey Per Pollen: '+Math.round(player.honeyPerPollen*100)+'%<br>Loot Luck: '+Math.round(player.lootLuck*100)+'%<br>Capacity Multiplier: '+Math.round(player.capacityMultiplier*100)+'%<br>Red Field Capacity: '+Math.round(player.redFieldCapacity*100)+'%<br>White Field Capacity: '+Math.round(player.whiteFieldCapacity*100)+'%<br>Blue Field Capacity: '+Math.round(player.blueFieldCapacity*100)+'%<br>Ability Duplication Chance: '+Math.round(player.abilityDuplicationChance*100+(player.hasDigitalBee&&player.extraInfo.drives.maxed?1:0))+'%<br>Bond From Treats: '+Math.round(player.bondFromTreats*100)+'%<br>Nectar Multiplier: '+Math.round(player.nectarMultiplier*100)+'%<br>Defense: '+Math.round(player.defense*100)+'%<br>Monster Respawn Rate: '+Math.round((1/player.monsterRespawnRate)*100)+'%<br><br>Convert Total: '+Math.round(player.convertTotal)+'<br>Attack Total: '+Math.round(player.attackTotal)
+                statString.innerHTML='<br>Session Honey: '+MATH.addCommas(player.sessionHoney.toString())+'<br>FPS: '+(1/dt).toFixed(2)+'<br>Delta Time: '+dt.toFixed(4)+'<br>Particle Count: '+ParticleRenderer.particles.length+'<br>Token Count: '+objects.tokens.length+'<br>Entity Count: '+(objects.bees.length+objects.tempBees.length+objects.bees.length+objects.tokens.length+objects.mobs.length+objects.explosions.length+objects.flames.length+objects.bubbles.length+objects.marks.length+objects.triangulates.length+objects.fuzzBombs.length+objects.balloons.length+objects.targets.length+objects.planters.length)+'<br><br>Convert Rate: '+Math.round(player.convertRate*100)+'%<br>Red Pollen: '+Math.round(player.redPollen*100)+'%<br>Blue Pollen: '+Math.round(player.bluePollen*100)+'%<br>White Pollen: '+Math.round(player.whitePollen*100)+'%<br>Capacity Multiplier: '+Math.round(player.capacityMultiplier*100)+'%<br>Walk Speed: '+player.walkSpeed.toFixed(1)+'<br>Jump Power: '+player.jumpPower.toFixed(1)+'<br>Instant Red Conversion: '+Math.round(player.instantRedConversion*100)+'%<br>Instant Blue Conversion: '+Math.round(player.instantBlueConversion*100)+'%<br>Instant White Conversion: '+Math.round(player.instantWhiteConversion*100)+'%<br>Instant Flame Conversion: '+Math.round(player.instantFlameConversion*100)+'%<br>Critical Chance: '+Math.round(player.criticalChance*100)+'%<br>Critical Power: '+Math.round(player.criticalPower*100)+'%<br>Super-Crit Chance: '+Math.round(player.superCritChance*100)+'%<br>Super-Crit Power: '+Math.round(player.superCritPower*100)+'%<br>Goo: '+Math.round(player.goo*100)+'%<br>Flame Pollen: '+Math.round(player.flamePollen*100)+'%<br>Flame Life: '+Math.round(player.flameLife*100)+'%<br>Bubble Pollen: '+Math.round(player.bubblePollen*100)+'%<br>Pollen From Tools: '+Math.round(player.pollenFromTools*100)+'%<br>Pollen From Bees: '+Math.round(player.pollenFromBees*100)+'%<br>White Bomb Pollen: '+Math.round(player.whiteBombPollen*100)+'%<br>Red Bomb Pollen: '+Math.round(player.redBombPollen*100)+'%<br>Blue Bomb Pollen: '+Math.round(player.blueBombPollen*100)+'%<br>White Bee Attack: '+player.whiteBeeAttack+'<br>Blue Bee Attack: '+player.blueBeeAttack+'<br>Red Bee Attack: '+player.redBeeAttack+'<br>Bee Attack Multiplier: '+Math.round(player.beeAttack*100)+'%<br>Honey From Tokens: '+Math.round(player.honeyFromTokens*100)+'%<br>Red Bee Ability Rate: '+Math.round(player.redBeeAbilityRate*100)+'%<br>Blue Bee Ability Rate: '+Math.round(player.blueBeeAbilityRate*100)+'%<br>White Bee Ability Rate: '+Math.round(player.whiteBeeAbilityRate*100)+'%<br>Bee Movespeed: '+Math.round(player.beeSpeed*100)+'%<br>Bee Energy: '+Math.round(player.beeEnergy*100)+'%<br>Honey At Hive: '+Math.round(player.honeyAtHive*100)+'%<br>Honey Per Pollen: '+Math.round(player.honeyPerPollen*100)+'%<br>Loot Luck: '+Math.round(player.lootLuck*100)+'%<br>Capacity Multiplier: '+Math.round(player.capacityMultiplier*100)+'%<br>Red Field Capacity: '+Math.round(player.redFieldCapacity*100)+'%<br>White Field Capacity: '+Math.round(player.whiteFieldCapacity*100)+'%<br>Blue Field Capacity: '+Math.round(player.blueFieldCapacity*100)+'%<br>Ability Duplication Chance: '+Math.round(player.abilityDuplicationChance*100+(player.hasDigitalBee&&player.extraInfo.drives.maxed?1:0))+'%<br>Bond From Treats: '+Math.round(player.bondFromTreats*100)+'%<br>Nectar Multiplier: '+Math.round(player.nectarMultiplier*100)+'%<br>Defense: '+Math.round(player.defense*100)+'%<br>Monster Respawn Rate: '+Math.round((1/player.monsterRespawnRate)*100)+'%<br><br>Convert Total: '+Math.round(player.convertTotal)+'<br>Attack Total: '+Math.round(player.attackTotal)
             }else if(currentPage===4){
 
                 pages[4].innerHTML=player.beequipPageHTML
@@ -25483,7 +25559,7 @@ function BeeSwarmSimulator(DATA){
 
                             let c=cost[j].split(' ')
 
-                            if(c[1]==='honey'&&player.honey<Number(c[0])||c[1]!=='honey'&&items[c[1]].amount<Number(c[0])){
+                            if(!out.testMode && (c[1]==='honey'&&player.honey<Number(c[0])||c[1]!=='honey'&&items[c[1]].amount<Number(c[0]))){
 
                                 canBuy=false
                             }
@@ -26401,12 +26477,12 @@ function BeeSwarmSimulator(DATA){
                 out.updateGear(true)
             }
 
-            if(out.pollen||out.hiveBalloon.pollen){
+            if(!triggers.hive.colliding){
 
                 out.stopConverting=false
             }
 
-            out.converting=out.convertingBalloon=triggers.hive.colliding&&!out.stopConverting
+            out.converting=out.convertingBalloon=triggers.hive.colliding&&!out.stopConverting&&(out.pollen > 0 || (out.hiveBalloon && out.hiveBalloon.pollen > 0))
 
             if(triggers.hiveEffects.colliding){
 
@@ -33621,6 +33697,7 @@ function BeeSwarmSimulator(DATA){
     }
 
     function SAVE_GAME(){
+        if(out.testMode) return;
 
         let code=GENERATE_SAVE_CODE()
 

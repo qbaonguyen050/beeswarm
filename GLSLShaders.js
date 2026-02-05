@@ -135,18 +135,20 @@ window.glsl_static_geometry_fsh = `#version 300 es
         vec3 toLight=normalize(vec3(50,100,-50)-pixPos);
         vec3 halfVec=normalize(toCam+toLight);
 
-        float specular=pow(max(dot(halfVec,pixNormal),0.), 128.0);
+        float specular=pow(max(dot(halfVec,pixNormal),0.), 64.0);
+        float specInst=0.5 + 0.3 * isNight;
 
-        float specInst=0.6*isNight;
-
-        // Simple rim lighting to make entities pop
+        // Enhanced rim lighting to make entities pop
         float rim=1.0-max(dot(toCam,pixNormal),0.);
-        rim=pow(rim,3.0)*0.2*isNight;
+        rim=pow(rim,4.0)*0.5;
+
+        vec3 baseCol = mix(mix(pixColor.rgb,t.rgb,t.a),pixColor.rgb,pixUV.z);
+        vec3 litCol = (baseCol + specular*specInst + rim) * shadow;
 
         BEESMAS{
-        fragColor=vec4(mix((mix(mix(pixColor.rgb,t.rgb,t.a),pixColor.rgb,pixUV.z)+specular*specInst+rim)*shadow,FOGCOLB,smoothstep(-30.0,130.0,EXTRAFOGpixFog))*isNight,pixColor.w);
+        fragColor=vec4(mix(litCol,FOGCOLB,smoothstep(-30.0,130.0,EXTRAFOGpixFog))*isNight,pixColor.w);
         }ELSE{
-        fragColor=vec4(mix((mix(mix(pixColor.rgb,t.rgb,t.a),pixColor.rgb,pixUV.z)+specular*specInst+rim)*shadow,FOGCOL,smoothstep(20.0,120.0,EXTRAFOGpixFog))*isNight,pixColor.w);
+        fragColor=vec4(mix(litCol,FOGCOL,smoothstep(20.0,120.0,EXTRAFOGpixFog))*isNight,pixColor.w);
         }
     }
 `
@@ -266,8 +268,9 @@ window.glsl_token_geometry_fsh = `#version 300 es
     uniform float isNight;
 
     void main(){
-
-        fragColor=vec4(texture(tex,pixUV.xy).rgb*isNight,pixUV.z);
+        vec3 col = texture(tex,pixUV.xy).rgb;
+        // Tokens glow slightly
+        fragColor=vec4(col * (0.9 + 0.3 * isNight), pixUV.z);
     }
 `
 window.glsl_flower_geometry_vsh = `#version 300 es

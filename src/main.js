@@ -63,6 +63,12 @@ async function runMain(){
 
     let addedDivsToSplice=[],ableToImport,printedCode
 
+    document.getElementById('mainTest').onclick=function(){
+        window.testMode = true;
+        document.getElementById('mainMenu').style.display='none'
+        BeeSwarmSimulator({id:'test',name:'Test Mode Save'})
+    }
+
     document.getElementById('mainPlay').onclick=function(){
 
         copyThumbnail('select')
