@@ -1,5 +1,5 @@
-// Register Service Worker for offline support
-if ('serviceWorker' in navigator) {
+// Register Service Worker for offline support (only if served over http/https)
+if ('serviceWorker' in navigator && (location.protocol === 'http:' || location.protocol === 'https:')) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
             .then(reg => console.log('Service Worker registered'))
