@@ -12013,8 +12013,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes[this.mesh].vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[this.mesh].indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,0.9,1)
             gl.drawElements(gl.TRIANGLES,meshes[this.mesh].indexAmount,gl.UNSIGNED_SHORT,0)
@@ -12643,8 +12643,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.petalShuriken.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.petalShuriken.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,1,this.life*1.75)
             gl.drawElements(gl.TRIANGLES,meshes.petalShuriken.indexAmount,gl.UNSIGNED_SHORT,0)
@@ -12977,8 +12977,8 @@ function BeeSwarmSimulator(DATA){
                     gl.uniform2f(glCache.mob_instanceInfo2,1,1)
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes[this.type].vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[this.type].indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.drawElements(gl.TRIANGLES,meshes[this.type].indexAmount,gl.UNSIGNED_SHORT,0)
 
                     this.pos[1]+=this.type==='werewolf'||this.type==='mantis'||this.type==='tunnelBear'?3:1
@@ -13022,8 +13022,8 @@ function BeeSwarmSimulator(DATA){
                     gl.uniform2f(glCache.mob_instanceInfo2,1,1)
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes[this.type].vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[this.type].indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.drawElements(gl.TRIANGLES,meshes[this.type].indexAmount,gl.UNSIGNED_SHORT,0)
 
                     this.pos[1]+=this.type==='werewolf'||this.type==='mantis'?3:1
@@ -13252,8 +13252,8 @@ function BeeSwarmSimulator(DATA){
                     gl.uniform2f(glCache.mob_instanceInfo2,1,1)
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes.mondoChick.vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.mondoChick.indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.drawElements(gl.TRIANGLES,meshes.mondoChick.indexAmount,gl.UNSIGNED_SHORT,0)
 
                 break
@@ -13451,8 +13451,8 @@ function BeeSwarmSimulator(DATA){
                     gl.uniform2f(glCache.mob_instanceInfo2,this.scaling,1)
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes.snowBear.vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.snowBear.indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.drawElements(gl.TRIANGLES,meshes.snowBear.indexAmount,gl.UNSIGNED_SHORT,0)
 
                     if(this.ball.t<1){
@@ -13477,8 +13477,8 @@ function BeeSwarmSimulator(DATA){
                         gl.uniform2f(glCache.mob_instanceInfo2,1,1)
                         gl.bindBuffer(gl.ARRAY_BUFFER,meshes.snowball.vertBuffer)
                         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.snowball.indexBuffer)
-                        gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                        gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                        gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                        gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                         gl.drawElements(gl.TRIANGLES,meshes.snowball.indexAmount,gl.UNSIGNED_SHORT,0)
                     }
 
@@ -13553,8 +13553,8 @@ function BeeSwarmSimulator(DATA){
 
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes.spike.vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.spike.indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.uniform2f(glCache.mob_instanceInfo2,0.55,1)
                     gl.uniform4fv(glCache.mob_instanceInfo1,[this.pos[0],this.pos[1]-4,this.pos[2],0])
                     gl.drawElements(gl.TRIANGLES,meshes.spike.indexAmount,gl.UNSIGNED_SHORT,0)
@@ -13664,8 +13664,8 @@ function BeeSwarmSimulator(DATA){
 
                         gl.bindBuffer(gl.ARRAY_BUFFER,meshes.spike.vertBuffer)
                         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.spike.indexBuffer)
-                        gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                        gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                        gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                        gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                         gl.uniform2f(glCache.mob_instanceInfo2,0.5,1)
 
                         for(let i=this.spikes.length;i--;){
@@ -14079,8 +14079,8 @@ function BeeSwarmSimulator(DATA){
 
                         gl.bindBuffer(gl.ARRAY_BUFFER,meshes[m].vertBuffer)
                         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[m].indexBuffer)
-                        gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                        gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                        gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                        gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                         gl.uniform2f(glCache.mob_instanceInfo2,0.6,0.7)
 
                         for(let i=this.tornados.length;i--;){
@@ -14643,8 +14643,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.defenseTotem.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.defenseTotem.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,1,1)
             gl.drawElements(gl.TRIANGLES,meshes.defenseTotem.indexAmount,gl.UNSIGNED_SHORT,0)
@@ -14713,8 +14713,8 @@ function BeeSwarmSimulator(DATA){
 
                 gl.bindBuffer(gl.ARRAY_BUFFER,meshes.sweeper.vertBuffer)
                 gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.sweeper.indexBuffer)
-                gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                 this.pos[1]+=0.6
                 gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
                 this.pos[1]-=0.6
@@ -14879,8 +14879,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,this.mesh.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,this.mesh.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,0.9,1)
             gl.drawElements(gl.TRIANGLES,this.mesh.indexAmount,gl.UNSIGNED_SHORT,0)
@@ -15183,24 +15183,24 @@ function BeeSwarmSimulator(DATA){
             gl.uniform2f(glCache.mob_instanceInfo2,1.3,1)
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.coconutCrab.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.coconutCrab.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.drawElements(gl.TRIANGLES,meshes.coconutCrab.indexAmount,gl.UNSIGNED_SHORT,0)
 
             gl.uniform4fv(glCache.mob_instanceInfo1,this.clawA)
             gl.uniform2f(glCache.mob_instanceInfo2,1,1)
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.crabClaw.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.crabClaw.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.drawElements(gl.TRIANGLES,meshes.crabClaw.indexAmount,gl.UNSIGNED_SHORT,0)
 
             gl.uniform4fv(glCache.mob_instanceInfo1,this.clawB)
             gl.uniform2f(glCache.mob_instanceInfo2,1,1)
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.crabClaw.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.crabClaw.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.drawElements(gl.TRIANGLES,meshes.crabClaw.indexAmount,gl.UNSIGNED_SHORT,0)
         }
     }
@@ -15412,8 +15412,8 @@ function BeeSwarmSimulator(DATA){
             gl.uniform2f(glCache.mob_instanceInfo2,1,1)
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.stumpSnail.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.stumpSnail.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.drawElements(gl.TRIANGLES,meshes.stumpSnail.indexAmount,gl.UNSIGNED_SHORT,0)
         }
     }
@@ -15779,8 +15779,8 @@ function BeeSwarmSimulator(DATA){
                     gl.uniform2f(glCache.mob_instanceInfo2,this.isMega?1.25:0.8,1)
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes[this.mega].vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[this.mega].indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.drawElements(gl.TRIANGLES,meshes[this.mega].indexAmount,gl.UNSIGNED_SHORT,0)
 
                 break
@@ -15946,8 +15946,8 @@ function BeeSwarmSimulator(DATA){
                     gl.uniform2f(glCache.mob_instanceInfo2,1,1)
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes[this.gold].vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[this.gold].indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.drawElements(gl.TRIANGLES,meshes[this.gold].indexAmount,gl.UNSIGNED_SHORT,0)
 
                 break
@@ -16118,14 +16118,14 @@ function BeeSwarmSimulator(DATA){
                     gl.uniform2f(glCache.mob_instanceInfo2,1,1)
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes.cogTurret.vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.cogTurret.indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.drawElements(gl.TRIANGLES,meshes.cogTurret.indexAmount,gl.UNSIGNED_SHORT,0)
 
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes.cog.vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.cog.indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.uniform2f(glCache.mob_instanceInfo2,0.6,1)
 
                     for(let i=this.cogs.length;i--;){
@@ -16279,8 +16279,8 @@ function BeeSwarmSimulator(DATA){
 
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes[this.mesh].vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[this.mesh].indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.uniform2f(glCache.mob_instanceInfo2,this.meshScale,1)
                     gl.uniform4fv(glCache.mob_instanceInfo1,[this.spawnPos[0],this.spawnPos[1],this.spawnPos[2],0])
                     gl.drawElements(gl.TRIANGLES,meshes[this.mesh].indexAmount,gl.UNSIGNED_SHORT,0)
@@ -16391,8 +16391,8 @@ function BeeSwarmSimulator(DATA){
 
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes[this.mesh].vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[this.mesh].indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
                     gl.uniform2f(glCache.mob_instanceInfo2,this.meshScale,1)
                     gl.drawElements(gl.TRIANGLES,meshes[this.mesh].indexAmount,gl.UNSIGNED_SHORT,0)
@@ -16469,8 +16469,8 @@ function BeeSwarmSimulator(DATA){
 
                     gl.bindBuffer(gl.ARRAY_BUFFER,meshes.lawnMowerWarning.vertBuffer)
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.lawnMowerWarning.indexBuffer)
-                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                    gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                    gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                     gl.uniform2f(glCache.mob_instanceInfo2,1,1)
                     gl.uniform4fv(glCache.mob_instanceInfo1,[-21+this.dir*9.4,7.5,this.pos[2],0])
                     gl.drawElements(gl.TRIANGLES,meshes.lawnMowerWarning.indexAmount,gl.UNSIGNED_SHORT,0)
@@ -16489,8 +16489,8 @@ function BeeSwarmSimulator(DATA){
 
                 gl.bindBuffer(gl.ARRAY_BUFFER,meshes.lawnMower.vertBuffer)
                 gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.lawnMower.indexBuffer)
-                gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                 gl.uniform2f(glCache.mob_instanceInfo2,1,1)
                 gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
                 gl.drawElements(gl.TRIANGLES,meshes.lawnMower.indexAmount,gl.UNSIGNED_SHORT,0)
@@ -16553,8 +16553,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.popStar.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.popStar.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
 
             let dir=player.bodyDir.slice(),theta=TIME*2,st=Math.sin(theta)*(this.size+1),ct=Math.cos(theta)*(this.size+1)
 
@@ -16632,8 +16632,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.scorchingStar.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.scorchingStar.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
 
             let dir=player.bodyDir.slice(),theta=TIME*2+MATH.THIRD_PI*2,st=Math.sin(theta)*(this.size+1),ct=Math.cos(theta)*(this.size+1)
 
@@ -16716,8 +16716,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.gummyStar.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.gummyStar.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
 
             let dir=player.bodyDir.slice(),theta=TIME*2+MATH.THIRD_PI*4,st=Math.sin(theta)*(this.size+1),ct=Math.cos(theta)*(this.size+1)
 
@@ -16768,8 +16768,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.starSaw.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.starSaw.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
 
             let theta=TIME*3.5,dx=Math.sin(theta)*4,dz=Math.cos(theta)*4
 
@@ -16875,8 +16875,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.guidingStar.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.guidingStar.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
 
             let theta=TIME*0.75,st=Math.sin(theta)*fieldInfo[this.field].width*0.4,ct=Math.cos(theta)*fieldInfo[this.field].length*0.4
 
@@ -16942,8 +16942,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.levitatingStarShower.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.levitatingStarShower.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
 
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,Math.min((this.life)*3,1)*1.5,Math.min((3-this.life)*0.5,1))
@@ -17044,8 +17044,8 @@ function BeeSwarmSimulator(DATA){
             }else{
                 gl.bindBuffer(gl.ARRAY_BUFFER,meshes.fallingStar.vertBuffer)
                 gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.fallingStar.indexBuffer)
-                gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
 
                 gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
                 gl.uniform2f(glCache.mob_instanceInfo2,0.8,1)
@@ -17301,8 +17301,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.wave.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.wave.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,this.size,0.6*Math.min(this.life*this.life,1))
             gl.drawElements(gl.TRIANGLES,meshes.wave.indexAmount,gl.UNSIGNED_SHORT,0)
@@ -17567,8 +17567,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.gummyBall.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.gummyBall.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,this.rad*2,this.life*0.5)
             gl.drawElements(gl.TRIANGLES,meshes.gummyBall.indexAmount,gl.UNSIGNED_SHORT,0)
@@ -17749,8 +17749,8 @@ function BeeSwarmSimulator(DATA){
                 this.pos[3]+=(this.r-this.pos[3])*dt*4
                 gl.bindBuffer(gl.ARRAY_BUFFER,meshes.drainingDiamond.vertBuffer)
                 gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.drainingDiamond.indexBuffer)
-                gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                 gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
                 gl.uniform2f(glCache.mob_instanceInfo2,1.6,0.75)
                 gl.drawElements(gl.TRIANGLES,meshes.drainingDiamond.indexAmount,gl.UNSIGNED_SHORT,0)
@@ -17759,8 +17759,8 @@ function BeeSwarmSimulator(DATA){
 
                 gl.bindBuffer(gl.ARRAY_BUFFER,meshes.shiningDiamond.vertBuffer)
                 gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.shiningDiamond.indexBuffer)
-                gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-                gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+                gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+                gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
                 gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
                 gl.uniform2f(glCache.mob_instanceInfo2,1.6,1)
                 gl.drawElements(gl.TRIANGLES,meshes.shiningDiamond.indexAmount,gl.UNSIGNED_SHORT,0)
@@ -18013,8 +18013,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.tornado.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.tornado.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             this.pos[3]=TIME*(this.speed+5)
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,0.65,0.7)
@@ -18545,8 +18545,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes[this.type+'Planter'].vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[this.type+'Planter'].indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,1,1)
             gl.drawElements(gl.TRIANGLES,meshes[this.type+'Planter'].indexAmount,gl.UNSIGNED_SHORT,0)
@@ -18609,8 +18609,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes[this.mesh].vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[this.mesh].indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
 
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,0.65,1)
@@ -18745,8 +18745,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes.spike.vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.spike.indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,1,1)
             gl.drawElements(gl.TRIANGLES,meshes.spike.indexAmount,gl.UNSIGNED_SHORT,0)
@@ -19124,8 +19124,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes[this.type+'Sprout'].vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[this.type+'Sprout'].indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,0.6+(1-this.growth)*1.6,1)
             gl.drawElements(gl.TRIANGLES,meshes[this.type+'Sprout'].indexAmount,gl.UNSIGNED_SHORT,0)
@@ -19374,8 +19374,8 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,meshes[this.type].vertBuffer)
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes[this.type].indexBuffer)
-            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FLASE,24,0)
-            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FLASE,24,12)
+            gl.vertexAttribPointer(glCache.mob_vertPos,3,gl.FLOAT,gl.FALSE,24,0)
+            gl.vertexAttribPointer(glCache.mob_vertColor,3,gl.FLOAT,gl.FALSE,24,12)
 
             gl.uniform4fv(glCache.mob_instanceInfo1,this.pos)
             gl.uniform2f(glCache.mob_instanceInfo2,this.displayScale,1)
@@ -34344,17 +34344,17 @@ function BeeSwarmSimulator(DATA){
 
         gl.bindBuffer(gl.ARRAY_BUFFER,meshes.bee.vertBuffer)
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.bee.indexBuffer)
-        gl.vertexAttribPointer(glCache.bee_vertPos,3,gl.FLOAT,gl.FLASE,28,0)
-        gl.vertexAttribPointer(glCache.bee_vertUV,4,gl.FLOAT,gl.FLASE,28,12)
+        gl.vertexAttribPointer(glCache.bee_vertPos,3,gl.FLOAT,gl.FALSE,28,0)
+        gl.vertexAttribPointer(glCache.bee_vertUV,4,gl.FLOAT,gl.FALSE,28,12)
 
         gl.bindBuffer(gl.ARRAY_BUFFER,meshes.bees.instanceBuffer)
         gl.bufferData(gl.ARRAY_BUFFER,Float32Array.from(meshes.bees.instanceData),gl.DYNAMIC_DRAW)
 
-        gl.vertexAttribPointer(glCache.bee_instancePos,4,gl.FLOAT,gl.FLASE,44,0)
+        gl.vertexAttribPointer(glCache.bee_instancePos,4,gl.FLOAT,gl.FALSE,44,0)
         gl.vertexAttribDivisor(glCache.bee_instancePos,1)
-        gl.vertexAttribPointer(glCache.bee_instanceRotation,4,gl.FLOAT,gl.FLASE,44,16)
+        gl.vertexAttribPointer(glCache.bee_instanceRotation,4,gl.FLOAT,gl.FALSE,44,16)
         gl.vertexAttribDivisor(glCache.bee_instanceRotation,1)
-        gl.vertexAttribPointer(glCache.bee_instanceUV,3,gl.FLOAT,gl.FLASE,44,32)
+        gl.vertexAttribPointer(glCache.bee_instanceUV,3,gl.FLOAT,gl.FALSE,44,32)
         gl.vertexAttribDivisor(glCache.bee_instanceUV,1)
 
         gl.drawElementsInstanced(gl.TRIANGLES,meshes.bee.indexAmount,gl.UNSIGNED_SHORT,0,meshes.bees.instanceData.length*MATH.INV_11)
@@ -34410,8 +34410,8 @@ function BeeSwarmSimulator(DATA){
 
         gl.bindBuffer(gl.ARRAY_BUFFER,meshes.token.vertBuffer)
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.token.indexBuffer)
-        gl.vertexAttribPointer(glCache.token_vertPos,3,gl.FLOAT,gl.FLASE,20,0)
-        gl.vertexAttribPointer(glCache.token_vertUV,2,gl.FLOAT,gl.FLASE,20,12)
+        gl.vertexAttribPointer(glCache.token_vertPos,3,gl.FLOAT,gl.FALSE,20,0)
+        gl.vertexAttribPointer(glCache.token_vertUV,2,gl.FLOAT,gl.FALSE,20,12)
 
         gl.bindBuffer(gl.ARRAY_BUFFER,meshes.tokens.instanceBuffer)
         gl.bufferData(gl.ARRAY_BUFFER,Float32Array.from(meshes.tokens.instanceData),gl.DYNAMIC_DRAW)
@@ -34508,26 +34508,26 @@ function BeeSwarmSimulator(DATA){
 
         gl.bindBuffer(gl.ARRAY_BUFFER,meshes.cylinder_explosion.vertBuffer)
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.cylinder_explosion.indexBuffer)
-        gl.vertexAttribPointer(glCache.explosion_vertPos,3,gl.FLOAT,gl.FLASE,12,0)
+        gl.vertexAttribPointer(glCache.explosion_vertPos,3,gl.FLOAT,gl.FALSE,12,0)
 
         gl.bindBuffer(gl.ARRAY_BUFFER,meshes.cylinder_explosions.instanceBuffer)
         gl.bufferData(gl.ARRAY_BUFFER,Float32Array.from(meshes.cylinder_explosions.instanceData),gl.DYNAMIC_DRAW)
-        gl.vertexAttribPointer(glCache.explosion_instancePos,3,gl.FLOAT,gl.FLASE,36,0)
+        gl.vertexAttribPointer(glCache.explosion_instancePos,3,gl.FLOAT,gl.FALSE,36,0)
         gl.vertexAttribDivisor(glCache.explosion_instancePos,1)
-        gl.vertexAttribPointer(glCache.explosion_instanceColor,4,gl.FLOAT,gl.FLASE,36,12)
+        gl.vertexAttribPointer(glCache.explosion_instanceColor,4,gl.FLOAT,gl.FALSE,36,12)
         gl.vertexAttribDivisor(glCache.explosion_instanceColor,1)
-        gl.vertexAttribPointer(glCache.explosion_instanceScale,2,gl.FLOAT,gl.FLASE,36,28)
+        gl.vertexAttribPointer(glCache.explosion_instanceScale,2,gl.FLOAT,gl.FALSE,36,28)
         gl.vertexAttribDivisor(glCache.explosion_instanceScale,1)
         gl.drawElementsInstanced(gl.TRIANGLES,meshes.cylinder_explosion.indexAmount,gl.UNSIGNED_SHORT,0,meshes.cylinder_explosions.instanceData.length*MATH.INV_9)
 
         gl.bindBuffer(gl.ARRAY_BUFFER,meshes.explosion.vertBuffer)
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,meshes.explosion.indexBuffer)
-        gl.vertexAttribPointer(glCache.explosion_vertPos,3,gl.FLOAT,gl.FLASE,12,0)
+        gl.vertexAttribPointer(glCache.explosion_vertPos,3,gl.FLOAT,gl.FALSE,12,0)
         gl.bindBuffer(gl.ARRAY_BUFFER,meshes.explosions.instanceBuffer)
         gl.bufferData(gl.ARRAY_BUFFER,Float32Array.from(meshes.explosions.instanceData),gl.DYNAMIC_DRAW)
-        gl.vertexAttribPointer(glCache.explosion_instancePos,3,gl.FLOAT,gl.FLASE,36,0)
-        gl.vertexAttribPointer(glCache.explosion_instanceColor,4,gl.FLOAT,gl.FLASE,36,12)
-        gl.vertexAttribPointer(glCache.explosion_instanceScale,2,gl.FLOAT,gl.FLASE,36,28)
+        gl.vertexAttribPointer(glCache.explosion_instancePos,3,gl.FLOAT,gl.FALSE,36,0)
+        gl.vertexAttribPointer(glCache.explosion_instanceColor,4,gl.FLOAT,gl.FALSE,36,12)
+        gl.vertexAttribPointer(glCache.explosion_instanceScale,2,gl.FLOAT,gl.FALSE,36,28)
         gl.drawElementsInstanced(gl.TRIANGLES,meshes.explosion.indexAmount,gl.UNSIGNED_SHORT,0,meshes.explosions.instanceData.length*MATH.INV_9)
 
         gl.depthMask(true)
