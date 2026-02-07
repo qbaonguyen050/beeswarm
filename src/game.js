@@ -19987,7 +19987,7 @@ function BeeSwarmSimulator(DATA){
 
                         })
 
-                        if(typeof _col==='string') B.isBannedGate=_col
+                        if(typeof _col==='string' && (!window.testMode || _col === "SUPREME_AMULET_GENERATOR")) B.isBannedGate=_col
 
                         B.parentMeshGlobalID=DIS.meshGlobalID
                         world.addBody(B)
@@ -23182,6 +23182,15 @@ function BeeSwarmSimulator(DATA){
         out.quests=[]
         out.beesmasDiag=''
 
+        out.grantSupremeAmulets = function() {
+            this.extraInfo.moonAmulet = '*1.5 capacityMultiplier,*1.75 convertRate,*1.05 nectarMultiplier,*1.15 lootLuck,*1.25 whitePollen,*1.02 honeyPerPollen';
+            this.extraInfo.supremeStarAmulet = '*2.5 capacityMultiplier,*1.5 convertRate,*1.1 redPollen,*1.1 bluePollen,*1.1 whitePollen,*1.6 whitePollen,+0.1 instantBlueConversion,+0.1 instantWhiteConversion,+0.1 instantRedConversion,+0.05 criticalChance,P gummyStarPassive,P starSawPassive';
+            this.extraInfo.supremeAntAmulet = '*2 capacityMultiplier,+100% criticalPower,+5% criticalChance,+20% whitePollen,+20% redPollen,+20% bluePollen';
+            this.extraInfo.supremeShellAmulet = '+25% goo,+25% whitePollen,+25% redPollen,+25% bluePollen,+10% attack';
+            this.extraInfo.supremeSnailAmulet = '+100% whitePollen,+100% redPollen,+100% bluePollen,+50% capacityMultiplier';
+            this.addMessage("Granted Supreme Amulets!", [255, 255, 0]);
+        };
+
         out.addQuest=function(name,req,NPCName){
 
             let NPC=NPCName.replace('*',''),
@@ -24282,9 +24291,9 @@ function BeeSwarmSimulator(DATA){
                     }
                 }
 
-                s=out.currentGear.beequips[out.beequipLookingAt].stats.out.split(',')
+                s=out.currentGear.beequips[out.beequipLookingAt].stats.player.split(',')
 
-                if(out.currentGear.beequips[out.beequipLookingAt].stats.out.length){
+                if(out.currentGear.beequips[out.beequipLookingAt].stats.player.length){
 
                     stats+="<br><p style='color:rgb(227, 194, 7);font-size:14px;margin-top:-10px'>[Hive Bonus]</p>"
 
@@ -25286,10 +25295,12 @@ function BeeSwarmSimulator(DATA){
             if(Math.abs(e.contact.ni.y)>0.5) out.grounded=true
 
             if(e.body.isBannedGate){
-
-                out.bannedGateMessage=e.body.isBannedGate
-
-                window.setTimeout(()=>{out.bannedGateMessage=undefined},3000)
+                if(e.body.isBannedGate === "SUPREME_AMULET_GENERATOR") {
+                    out.grantSupremeAmulets();
+                } else {
+                    out.bannedGateMessage=e.body.isBannedGate
+                    window.setTimeout(()=>{out.bannedGateMessage=undefined},3000)
+                }
             }
         })
 
@@ -25321,7 +25332,7 @@ function BeeSwarmSimulator(DATA){
             let b4=pollenAmount.textContent.length
             pollenAmount.textContent=MATH.addCommas((out.pollen).toString())+'/'+MATH.addCommas(out.capacity.toString())
             if(pollenAmount2.style) pollenAmount2.textContent = pollenAmount.textContent;
-            honeyAmount.textContent=MATH.addCommas((out.honey).toString())
+            honeyAmount.textContent=out.honey === Infinity ? "∞" : MATH.addCommas((out.honey).toString())
             if(honeyAmount2.style) honeyAmount2.textContent = honeyAmount.textContent;
 
             if(pollenAmount.textContent.length!==b4){
@@ -26861,7 +26872,7 @@ function BeeSwarmSimulator(DATA){
         return m
     }
 
-    let ROBO_BEAR_DIALOGUE=["Beep boop. I'm Robo Bear!",...(isBeesmas?
+    let ROBO_BEAR_DIALOGUE=["Beep boop. I'm Robo Bear!", "01001000 01100101 01101100 01101100 01101111", "I was built to analyze the efficiency of bees.", "Did you know that bees are 42% more efficient when they are happy?", "The Cog Amulet is my greatest invention.", "Processing... processing...", ...(isBeesmas?
 
         ["My sensors state that the time is Beesmas! Which is perfectly fine since the cold temperatures help prevent me from overheating. I don't need to be repaired!!!","And because I'm a robot who utilizes only logical reasoning and objectivity, subjective matters like the puny purple paper party presents don't appeal to me.","No silly decorations or sentimental gifts from me. They'll burn once the world ends. (whoops ive said too much)"]
 
@@ -28170,6 +28181,13 @@ function BeeSwarmSimulator(DATA){
                 viewMatrix:[33.75-2,4,-21.25,MATH.HALF_PI,-0.2],
                 cost:['150 ticket'],
                 desc:'A generous bee who spreads the joy of Beesmas by occasionally hands out random gifts to you!'
+            },{
+                amountPurchased:0,maxPurchasedAmount:Infinity,
+                name:'mythicEgg',
+                slot:'item',
+                viewMatrix:[33.75-2,4,-17.25,MATH.HALF_PI,-0.2],
+                cost:['500 ticket'],
+                desc:'A rare egg that hatches into a mythic bee!'
             },{
                 amountPurchased:0,maxPurchasedAmount:1,
                 name:'crimsonBeeEgg',
@@ -32668,6 +32686,7 @@ function BeeSwarmSimulator(DATA){
             let f=Object.constructor('box','a','cylinder','sphere','d','e','star','INFO',player.createdMesh)
 
             f(box,a,cylinder,sphere,d,e,star,player.restrictionInfo)
+            box(20, 1, -20, 4, 4, 4, [0, 0, 0], "SUPREME_AMULET_GENERATOR", true, true, true)
         })
 
         mesh.setBuffers()
@@ -34566,23 +34585,17 @@ function BeeSwarmSimulator(DATA){
     }
 
     if (window.testMode) {
-        player.honey = 1e15;
+        player.honey = Infinity;
         for (let i in items) {
             if (items[i] && items[i].amount !== undefined) items[i].amount = 999;
         }
-        player.currentGear.tool = 'gummyBaller';
-        player.currentGear.backpack = 'coconutCanister';
-        player.currentGear.boots = 'gummyBoots';
-        player.currentGear.mask = 'diamondMask';
-        player.currentGear.belt = 'petalBelt';
-        player.currentGear.glider = 'glider';
-        player.currentGear.leftGuard = 'crimsonGuard';
-        player.currentGear.rightGuard = 'cobaltGuard';
-        player.currentGear.sprinkler = 'superSaturator';
-        player.updateGear();
     }
 
     window.out = player;
+    window.player = player;
+    window.items = items;
+    window.NPCs = NPCs;
+    window.addReward = addReward;
 
     loop(0)
 
