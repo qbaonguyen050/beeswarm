@@ -1,7 +1,8 @@
 function BeeSwarmSimulator(DATA){
     try {
 
-let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_COLLECT=0,BEE_FLY=0,then=0,dt,frameCount=0,TIME=0,player,out,NIGHT_DARKNESS=0.55,NPCs,STATS_TICK=false,leavesTimer=45,snowflakeTimer=2,testRealm=DATA.name===window.atob('VGVzdFJlYWxt'),minNPC
+let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_COLLECT=0,BEE_FLY=0,then=0,dt,frameCount=0,TIME=0,player,out,NIGHT_DARKNESS=0.55,NPCs,STATS_TICK=false,leavesTimer=45,snowflakeTimer=2,testRealm=DATA.name===window.atob('VGVzdFJlYWxt'),items,objects,flowers,effects,textRenderer,minNPC
+    NPCs={};items={};objects={};flowers={};effects={};textRenderer={};
     let Math=_M,width=window.thisProgramIsInFullScreen?500:window.innerWidth+1,height=window.thisProgramIsInFullScreen?500:window.innerHeight+1,half_width=width*0.5,half_height=height*0.5,aspect=width/height,FETCHED_CODE={},beeCanvas,UPDATE_FLOWER_MESH=true,GIFTED_BEE_TEXTURE_OFFSET=768/2048
 
     //eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -7444,7 +7445,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
         }
     }
 
-    let items={
+    items={
 
         translator:{
 
@@ -10015,7 +10016,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
         bondArr:[240,72,218],
     }
 
-    let objects={
+    objects={
 
         tokens:[],
         bees:[],
@@ -10250,7 +10251,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         this.attackTimer=(1.25+Math.random()*0.5)*(this.type==='precise'?1.6:1)
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10321,7 +10322,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         }
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],TIME*5,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],TIME*5,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10394,7 +10395,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                     if(vec3.sqrDist(this.moveTo,this.pos)<0.8)
                         this.moveOffset=[MATH.random(-5,5),0,MATH.random(-5,5)]
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                     if(player.converting&&player.pollen){
 
@@ -10432,7 +10433,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         return
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10478,7 +10479,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         this.state='moveToFlower'
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.collectRot[0],this.collectRot[1],this.collectRot[2],BEE_COLLECT,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.collectRot[0],this.collectRot[1],this.collectRot[2],BEE_COLLECT,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10513,7 +10514,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         return
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10563,7 +10564,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         this.state='moveToPlayer'
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.collectRot[0],this.collectRot[1],this.collectRot[2],BEE_COLLECT,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.collectRot[0],this.collectRot[1],this.collectRot[2],BEE_COLLECT,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10596,7 +10597,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         this.pollen=amountToTake
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10612,7 +10613,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
 
                     this.convertTimer-=dt
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,0,1,0,TIME*5,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,0,1,0,TIME*5,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
                     if(this.convertTimer<=0){
 
                         this.state='moveToHiveToConvert'
@@ -10666,7 +10667,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         this.pollen=amountToTake
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10682,7 +10683,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
 
                     this.convertTimer-=dt
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,0,1,0,TIME*5,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,0,1,0,TIME*5,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
                     if(this.convertTimer<=0){
 
                         this.state='moveToHiveToConvertBalloon'
@@ -10723,7 +10724,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         this.sleepRotate=Math.random()*MATH.TWO_PI
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10744,7 +10745,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         textRenderer.add('zzz',[this.pos[0]+MATH.random(-1,1),this.pos[1]+MATH.random(-1,1),this.pos[2]+Math.random()+0.25],[255,255,255],0,'',1.25)
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,0,1,0,this.sleepRotate,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,0,1,0,this.sleepRotate,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10778,7 +10779,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         }
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10865,7 +10866,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         objects.explosions.push(new Explosion({col:[1,0,0],pos:this.pos,life:0.75,size:1.75,speed:0.3,aftershock:0}))
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.targetLookDir[0],this.targetLookDir[1],this.targetLookDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.targetLookDir[0],this.targetLookDir[1],this.targetLookDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10894,7 +10895,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         this.state='moveToPlayer'
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -10920,7 +10921,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                     vec3.normalize(this.moveDir,this.moveDir)
                     vec3.scaleAndAdd(this.pos,this.pos,this.moveDir,dt*this.speed*player.beeSpeed)
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
             }
@@ -11083,7 +11084,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         this.attackTimer=1.25+Math.random()*0.5*(this.type==='precise'?1.75:1)
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -11144,7 +11145,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         }
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],TIME*5,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],TIME*5,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -11164,7 +11165,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                     if(vec3.sqrDist(this.moveTo,this.pos)<0.8)
                         this.moveOffset=[MATH.random(-5,5),0,MATH.random(-5,5)]
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                     if(player.converting&&player.pollen){
 
@@ -11210,7 +11211,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         return
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -11261,7 +11262,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         this.state='moveToFlower'
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.collectRot[0],this.collectRot[1],this.collectRot[2],BEE_COLLECT,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.collectRot[0],this.collectRot[1],this.collectRot[2],BEE_COLLECT,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -11295,7 +11296,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         }
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -11378,7 +11379,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         objects.explosions.push(new Explosion({col:[1,0,0],pos:this.pos,life:0.75,size:1.75,speed:0.3,aftershock:0}))
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.targetLookDir[0],this.targetLookDir[1],this.targetLookDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.targetLookDir[0],this.targetLookDir[1],this.targetLookDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
 
@@ -11407,7 +11408,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                         this.state='moveToPlayer'
                     }
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],this.meshScale,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo[this.type].u,this.GIFTED_BEE_TEXTURE_OFFSET,beeInfo[this.type].meshPartId)
 
                 break
             }
@@ -13623,7 +13624,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                             this.pos[0]+=d[0]*dt*6
                             this.pos[2]+=d[1]*dt*6
 
-                            meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],1.5,d[0],0,d[1],BEE_FLY,beeInfo.vicious.u,beeInfo.vicious.v,beeInfo.vicious.meshPartId)
+                            meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],1.5,d[0],0,d[1],BEE_FLY,beeInfo.vicious.u,beeInfo.vicious.v,beeInfo.vicious.meshPartId)
                         }
 
                         if(this.nextAttackTimer<=0){
@@ -13638,7 +13639,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                             this.nextAttackTimer-=dt
                             this.addSpikeAttackTimer-=dt
 
-                            meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],1.5,Math.sin(TIME*8),0,Math.cos(TIME*8),BEE_FLY,beeInfo.vicious.u,beeInfo.vicious.v,beeInfo.vicious.meshPartId)
+                            meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],1.5,Math.sin(TIME*8),0,Math.cos(TIME*8),BEE_FLY,beeInfo.vicious.u,beeInfo.vicious.v,beeInfo.vicious.meshPartId)
 
                             if(this.addSpikeAttackTimer<=0){
 
@@ -13652,7 +13653,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                             this.nextAttackTimer-=dt
                             this.addSpikeAttackTimer-=dt
 
-                            meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],1.5,player.body.position.x-this.pos[0],player.body.position.y-this.pos[1],player.body.position.z-this.pos[2],BEE_FLY,beeInfo.vicious.u,beeInfo.vicious.v,beeInfo.vicious.meshPartId)
+                            meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],1.5,player.body.position.x-this.pos[0],player.body.position.y-this.pos[1],player.body.position.z-this.pos[2],BEE_FLY,beeInfo.vicious.u,beeInfo.vicious.v,beeInfo.vicious.meshPartId)
 
                             if(this.addSpikeAttackTimer<=0){
 
@@ -13707,7 +13708,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
 
                     } else {
 
-                        meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],1.5,Math.random()-0.5,Math.random()-0.5,Math.random()-0.5,BEE_FLY,beeInfo.vicious.u,beeInfo.vicious.v,beeInfo.vicious.meshPartId)
+                        meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],1.5,Math.random()-0.5,Math.random()-0.5,Math.random()-0.5,BEE_FLY,beeInfo.vicious.u,beeInfo.vicious.v,beeInfo.vicious.meshPartId)
 
                         textRenderer.addDecalRaw(this.pos[0],this.pos[1],this.pos[2],0,0,...textRenderer.decalUV.smiley,0.75,0,0,-2,-2,0)
                     }
@@ -13805,7 +13806,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                     this.pos[1]+=this.moveDir[1]*dt
                     this.pos[2]+=this.moveDir[2]*dt
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],1.5,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],1.5,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
 
                     if(this.pos[1]>55){
 
@@ -13821,7 +13822,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                     this.pos[1]+=this.moveDir[1]*dt
                     this.pos[2]+=this.moveDir[2]*dt
 
-                    meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],1.5,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
+                    meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],1.5,this.moveDir[0],this.moveDir[1],this.moveDir[2],BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
 
                     if(TIME>this.timeAtArrival){
 
@@ -13989,7 +13990,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                             this.pos[0]+=d[0]*dt*6
                             this.pos[2]+=d[1]*dt*6
 
-                            meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],1.5,d[0],0,d[1],BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
+                            meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],1.5,d[0],0,d[1],BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
                         }
 
                         if(this.nextAttackTimer<=0){
@@ -14007,13 +14008,13 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
 
                             this.nextAttackTimer-=dt
 
-                            meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],1.5,Math.sin(TIME*8),0,Math.cos(TIME*8),BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
+                            meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],1.5,Math.sin(TIME*8),0,Math.cos(TIME*8),BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
 
                         } else if(this.attackState===1){
 
                             this.nextAttackTimer-=dt
 
-                            meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],1.5,player.body.position.x-this.pos[0],player.body.position.y-this.pos[1],player.body.position.z-this.pos[2],BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
+                            meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],1.5,player.body.position.x-this.pos[0],player.body.position.y-this.pos[1],player.body.position.z-this.pos[2],BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
                         }
 
                         if(this.windWhipTimer>-0.25){
@@ -14141,7 +14142,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
 
                     } else {
 
-                        meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],1.5,Math.random()-0.5,Math.random()-0.5,Math.random()-0.5,BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
+                        meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],1.5,Math.random()-0.5,Math.random()-0.5,Math.random()-0.5,BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
 
                         textRenderer.addDecalRaw(this.pos[0],this.pos[1],this.pos[2],0,0,...textRenderer.decalUV.smiley,0.75,0,0,-2,-2,0)
                     }
@@ -17902,7 +17903,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
 
             if(this.windyBee){
 
-                meshes.bees.instanceData.push(this.pos[0],this.pos[1],this.pos[2],1.5,this.moveDir[0],0,this.moveDir[1],BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
+                meshes.bees.instanceData.push(this.pos[0],this.pos[1]+Math.sin(TIME*4+this.hiveX*7+this.hiveY)*0.1,this.pos[2],1.5,this.moveDir[0],0,this.moveDir[1],BEE_FLY,beeInfo.windy.u,beeInfo.windy.v,beeInfo.windy.meshPartId)
 
                 if(!(frameCount%12)){
 
@@ -19950,6 +19951,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
                 }
 
                 addBox=function(x,y,z,w,h,l,rot,_col,physics=true,textures=true,mesh=true){
+                    if (window.testMode && typeof _col === 'string' && _col !== 'SUPREME_AMULET_GENERATOR') { physics = false; mesh = false; }
 
                     let col=(_col===true?[0,0.8,0,0.6]:typeof _col==='string'?[1,0,0,0.6]:_col).slice()
 
@@ -21820,6 +21822,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
             out.restrictionInfo.allowed_cocoCave=!out.extraInfo.mob_coco||out.extraInfo.mob_coco<=0
 
             out.restrictionInfo.hasStickbug=!out.activeStickbug
+            if(window.testMode) { for(let k in out.restrictionInfo) { if(k.startsWith('allowed_')) out.restrictionInfo[k]=true; } }
         }
 
         out.endRoboChallenge=function(){
@@ -28813,7 +28816,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
 
     })({})
 
-    let textRenderer=(function(out){
+    textRenderer=(function(out){
 
         out.data=[]
         out.decals=[]
@@ -32678,6 +32681,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
 
 
     player.createdMesh=(testRealm?'box(23,-1,2,1,1,1,false,[1,0,1],false,false);box(23,-1,4,1,1,1,false,[1,0,0],false,false);box(23,-1,6,1,1,1,false,[0,0,1],false,false);box(23,-1,8,1,1,1,false,[1,1,1],false,false);box(23,-1,10,1,1,1,false,[1,1,0],false,false);box(19,-1,10,1,1,1,false,[1,1,0],false,false);box(17,-1,10,1,1,1,false,[1,1,1],false,false);box(15,-1,10,1,1,1,false,[1,1,1],false,false);box(13,-1,10,1,1,1,false,[1,1,1],false,false);box(11,-1,10,1,1,1,false,[1,1,1],false,false);box(9,-1,10,1,1,1,false,[1,1,1],false,false);':'')+window.mapMesh
+    if(window.testMode) player.createdMesh+=';box(20,1,-20,1,1,1,false,[1,1,0],true,true,true,"SUPREME_AMULET_GENERATOR")';
 
     let mesh=new Mesh(true)
 
@@ -32696,7 +32700,7 @@ let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_CO
 
     UPDATE_MAP_MESH()
 
-    let flowers={},texSize=256/1024,texOffset=-1/1024
+    flowers={},texSize=256/1024,texOffset=-1/1024
 
     verts=[]
     index=[]
