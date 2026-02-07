@@ -1,6 +1,7 @@
 function BeeSwarmSimulator(DATA){
     try {
 
+let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_COLLECT=0,BEE_FLY=0,then=0,dt,frameCount=0,TIME=0,player,out,NIGHT_DARKNESS=0.55,NPCs,STATS_TICK=false,leavesTimer=45,snowflakeTimer=2,testRealm=DATA.name===window.atob('VGVzdFJlYWxt'),minNPC
     let Math=_M,width=window.thisProgramIsInFullScreen?500:window.innerWidth+1,height=window.thisProgramIsInFullScreen?500:window.innerHeight+1,half_width=width*0.5,half_height=height*0.5,aspect=width/height,FETCHED_CODE={},beeCanvas,UPDATE_FLOWER_MESH=true,GIFTED_BEE_TEXTURE_OFFSET=768/2048
 
     //eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -202,7 +203,6 @@ function BeeSwarmSimulator(DATA){
     }
     window.onresize=windowResize
 
-    let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_COLLECT=0,BEE_FLY=0,then=0,dt,frameCount=0,TIME=0,player,NIGHT_DARKNESS=0.55,NPCs,STATS_TICK=false,leavesTimer=45,snowflakeTimer=2,testRealm=DATA.name===window.atob('VGVzdFJlYWxt'),minNPC
 
     let CURRENTLY_SNOW_STORM=0,CURRENTLY_HONEY_STORM=0,CURRENTLY_MYTHIC_STORM=0,STORM_SKY_COLOR,GLOBAL_SKY_COLOR=isBeesmas?[0.96,0.96,0.96]:[0.4,0.6,1]
 
@@ -9435,7 +9435,7 @@ function BeeSwarmSimulator(DATA){
                     let untilIndex = ['rare','epic','legendary','mythic'].indexOf(player.autoRJSettings.until);
                     let isGifted = player.hive[player.hiveIndex[1]][player.hiveIndex[0]].gifted;
 
-                    if(rarityIndex >= untilIndex || (player.autoRJSettings.gifted && isGifted)){
+                    if(rarityIndex >= untilIndex && (!player.autoRJSettings.gifted || isGifted)){
                         break
                     }
                 }
@@ -21764,6 +21764,7 @@ function BeeSwarmSimulator(DATA){
     }
 
     player=(function(out){
+        player = out;
 
         out.autoRJSettings={until:'rare',gifted:false}
 
@@ -26854,6 +26855,7 @@ function BeeSwarmSimulator(DATA){
         return out
 
     })({})
+    out = player;
 
     windowResize()
 
@@ -32686,7 +32688,7 @@ function BeeSwarmSimulator(DATA){
             let f=Object.constructor('box','a','cylinder','sphere','d','e','star','INFO',player.createdMesh)
 
             f(box,a,cylinder,sphere,d,e,star,player.restrictionInfo)
-            box(20, 1, -20, 4, 4, 4, [0, 0, 0], "SUPREME_AMULET_GENERATOR", true, true, true)
+            box(20, 1, -20, 4, 4, 4, [1, 1, 0], "SUPREME_AMULET_GENERATOR", true, true, true)
         })
 
         mesh.setBuffers()
