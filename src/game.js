@@ -85,6 +85,15 @@ function BeeSwarmSimulator(DATA){
 
     initMobileControls()
 
+    function showGameUI() {
+        document.getElementById('honeyAndPollenAmount').style.display = 'flex';
+        document.getElementById('abilityUI').style.display = 'block';
+        document.querySelector('.health-overlay').style.display = 'block';
+        document.querySelectorAll('.hotbarSlot').forEach(el => el.style.display = 'block');
+        document.querySelectorAll('.autoHotbarButton').forEach(el => el.style.display = 'block');
+    }
+    showGameUI();
+
     let actionEButtonTapped
     document.getElementById('actionWarning').addEventListener('touchstart',document.getElementById('actionWarning').onclick=function(e){
         actionEButtonTapped=1

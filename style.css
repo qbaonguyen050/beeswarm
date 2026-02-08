@@ -138,6 +138,7 @@
 
     #abilityUI {
         filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
+        display: none;
     }
 
     #UIBar {
@@ -156,7 +157,7 @@
         top: 15px;
         left: 50%;
         transform: translateX(-50%);
-        display: flex;
+        display: none;
         gap: 30px;
         z-index: 100;
         pointer-events: none;
@@ -316,6 +317,7 @@
         box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
         background: rgba(0, 0, 0, 0.8);
         pointer-events: none;
+        display: none;
     }
 
     #healthBar {
@@ -328,6 +330,7 @@
         border: 4px solid #ffcc00 !important;
         backdrop-filter: blur(8px);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        display: none;
     }
 
     /* Joysticks */
