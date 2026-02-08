@@ -1,6 +1,7 @@
 function BeeSwarmSimulator(DATA){
     try {
 
+    var player, out, NPCs = {};
     let Math=_M,width=window.thisProgramIsInFullScreen?500:window.innerWidth+1,height=window.thisProgramIsInFullScreen?500:window.innerHeight+1,half_width=width*0.5,half_height=height*0.5,aspect=width/height,FETCHED_CODE={},beeCanvas,UPDATE_FLOWER_MESH=true,GIFTED_BEE_TEXTURE_OFFSET=768/2048
 
     //eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -211,7 +212,7 @@ function BeeSwarmSimulator(DATA){
     }
     window.onresize=windowResize
 
-    let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_COLLECT=0,BEE_FLY=0,then=0,dt,frameCount=0,TIME=0,player,NIGHT_DARKNESS=0.55,NPCs,STATS_TICK=false,leavesTimer=45,snowflakeTimer=2,testRealm=DATA.name===window.atob('VGVzdFJlYWxt'),minNPC
+    let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_COLLECT=0,BEE_FLY=0,then=0,dt,frameCount=0,TIME=0,NIGHT_DARKNESS=0.55,STATS_TICK=false,leavesTimer=45,snowflakeTimer=2,testRealm=DATA.name===window.atob('VGVzdFJlYWxt'),minNPC
 
     let CURRENTLY_SNOW_STORM=0,CURRENTLY_HONEY_STORM=0,CURRENTLY_MYTHIC_STORM=0,STORM_SKY_COLOR,GLOBAL_SKY_COLOR=isBeesmas?[0.96,0.96,0.96]:[0.4,0.6,1]
 
@@ -21784,7 +21785,8 @@ function BeeSwarmSimulator(DATA){
         },
     }
 
-    player=(function(out){
+    player=(function(o){
+        let out = o;
 
         out.autoRJSettings={until:'rare',gifted:false}
 
@@ -26878,7 +26880,9 @@ function BeeSwarmSimulator(DATA){
 
         return out
 
-    })({})
+    })(out || {})
+
+    out = player;
 
     windowResize()
 
@@ -26914,7 +26918,12 @@ function BeeSwarmSimulator(DATA){
         }
         player.updateInventory()
     }
-    NPCs = {};
+    NPCs = NPCs || {};
+    window.player = player;
+    window.out = player;
+    window.items = items;
+    window.NPCs = NPCs;
+    window.addReward = addReward;
 
     // choice in dialouge
     // ['ask me a math question',[['2 + 3',function(){NPCs.blackBear.dialogue.push('','5! :D');NPCs.blackBear.dialogueIndex++}],['9 + 10',function(){NPCs.blackBear.dialogue.push('','21! :D');NPCs.blackBear.dialogueIndex++}]]]
@@ -34638,12 +34647,9 @@ function BeeSwarmSimulator(DATA){
         player.updateGear();
     }
 
-    window.out = player;
-
     loop(0)
 
     window.exposeCheats=()=>{
-        window.player=player
         window.items=items
         window.effects=effects
         window.flowers=flowers
