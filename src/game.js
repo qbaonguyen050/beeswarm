@@ -19920,9 +19920,13 @@ function BeeSwarmSimulator(DATA){
         }
 
         setMesh(verts,index){
+            if (this.mesh && this.mesh.buffers) {
+                gl.deleteBuffer(this.mesh.buffers.verts);
+                gl.deleteBuffer(this.mesh.buffers.index);
+                if (this.mesh.vao) gl.deleteVertexArray(this.mesh.vao);
+            }
 
             this.mesh={
-
                 data:{
                     verts:new Float32Array(verts),
                     index:new Uint16Array(index)
@@ -19931,9 +19935,39 @@ function BeeSwarmSimulator(DATA){
                     verts:gl.createBuffer(),
                     index:gl.createBuffer()
                 },
-
+                vao: gl.createVertexArray(),
                 indexAmount:index.length,
             }
+
+            gl.bindVertexArray(this.mesh.vao);
+
+            gl.bindBuffer(gl.ARRAY_BUFFER,this.mesh.buffers.verts)
+            gl.bufferData(gl.ARRAY_BUFFER,this.mesh.data.verts,gl.STATIC_DRAW)
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,this.mesh.buffers.index)
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,this.mesh.data.index,gl.STATIC_DRAW)
+
+            if(glCache){
+                if(this.isStatic){
+                    gl.enableVertexAttribArray(glCache.static_vertPos)
+                    gl.vertexAttribPointer(glCache.static_vertPos,3,gl.FLOAT,gl.FALSE,52,0)
+                    gl.enableVertexAttribArray(glCache.static_vertColor)
+                    gl.vertexAttribPointer(glCache.static_vertColor,4,gl.FLOAT,gl.FALSE,52,12)
+                    gl.enableVertexAttribArray(glCache.static_vertUV)
+                    gl.vertexAttribPointer(glCache.static_vertUV,3,gl.FLOAT,gl.FALSE,52,28)
+                    gl.enableVertexAttribArray(glCache.static_vertNormal)
+                    gl.vertexAttribPointer(glCache.static_vertNormal,3,gl.FLOAT,gl.FALSE,52,40)
+                } else {
+                    gl.enableVertexAttribArray(glCache.dynamic_vertPos)
+                    gl.vertexAttribPointer(glCache.dynamic_vertPos,3,gl.FLOAT,gl.FALSE,36,0)
+                    gl.enableVertexAttribArray(glCache.dynamic_vertColor)
+                    gl.vertexAttribPointer(glCache.dynamic_vertColor,3,gl.FLOAT,gl.FALSE,36,12)
+                    gl.enableVertexAttribArray(glCache.dynamic_vertNormal)
+                    gl.vertexAttribPointer(glCache.dynamic_vertNormal,3,gl.FLOAT,gl.FALSE,36,24)
+                }
+            }
+
+            gl.bindVertexArray(null);
         }
 
        setMeshFromFunction(func){
@@ -20947,31 +20981,9 @@ function BeeSwarmSimulator(DATA){
         }
 
         render(){
-
-            if(this.isStatic){
-
-                gl.bindBuffer(gl.ARRAY_BUFFER,this.mesh.buffers.verts)
-
-                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,this.mesh.buffers.index)
-
-                gl.vertexAttribPointer(glCache.static_vertPos,3,gl.FLOAT,gl.FALSE,52,0)
-                gl.vertexAttribPointer(glCache.static_vertColor,4,gl.FLOAT,gl.FALSE,52,12)
-                gl.vertexAttribPointer(glCache.static_vertUV,3,gl.FLOAT,gl.FALSE,52,28)
-                gl.vertexAttribPointer(glCache.static_vertNormal,3,gl.FLOAT,gl.FALSE,52,40)
-
-            } else {
-
-                gl.bindBuffer(gl.ARRAY_BUFFER,this.mesh.buffers.verts)
-
-                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,this.mesh.buffers.index)
-
-                gl.vertexAttribPointer(glCache.dynamic_vertPos,3,gl.FLOAT,gl.FALSE,36,0)
-                gl.vertexAttribPointer(glCache.dynamic_vertColor,3,gl.FLOAT,gl.FALSE,36,12)
-                gl.vertexAttribPointer(glCache.dynamic_vertNormal,3,gl.FLOAT,gl.FALSE,36,24)
-            }
-
+            gl.bindVertexArray(this.mesh.vao);
             gl.drawElements(gl.TRIANGLES,this.mesh.indexAmount,gl.UNSIGNED_SHORT,0)
-
+            gl.bindVertexArray(null);
         }
     }
 
@@ -23770,7 +23782,7 @@ function BeeSwarmSimulator(DATA){
                 } else {
 
                     items[i].svg.style.display='inline'
-                    items[i].amountText.textContent='x'+items[i].amount
+                    items[i].amountText.textContent='x'+(items[i].amount > 1e11 ? '∞' : items[i].amount)
 
                     noItemsMessage.style.display='none'
                 }
@@ -23779,7 +23791,7 @@ function BeeSwarmSimulator(DATA){
 
                     if(hotbarSlots[j].itemType===i){
 
-                        hotbarSlots[j].innerHTML=itemSVGCode[i].replace('SCALE','scale(0.67,0.67);margin-left:-12px;margin-top:-15px')+"<div style='font-size:9.5px;text-align:right;margin-top:-24px'>x"+items[i].amount+"</div>"
+                        hotbarSlots[j].innerHTML=itemSVGCode[i].replace('SCALE','scale(0.67,0.67);margin-left:-12px;margin-top:-15px')+"<div style='font-size:9.5px;text-align:right;margin-top:-24px'>x"+(items[i].amount > 1e11 ? '∞' : items[i].amount)+"</div>"
 
                         hotbarSlots[j].style.backgroundColor=items[i].amount>0?'rgb(235,235,235)':'rgb(190,190,190)'
 
@@ -23996,6 +24008,17 @@ function BeeSwarmSimulator(DATA){
         }
 
         out.computeStats=function(){
+
+            if (out.testMode) {
+                for (let i in out.precomputedStats) {
+                    out.defaultStats[i] = out.precomputedStats[i]
+                }
+                out.defaultStats.capacity = 1e18
+                out.defaultStats.capacityMultiplier = 1e18
+                out.defaultStats.honeyPerPollen = 1e6
+                out.defaultStats.walkSpeed = 250
+                return
+            }
 
             for(let i=out.effects.length;i--;){
 
@@ -25319,9 +25342,13 @@ function BeeSwarmSimulator(DATA){
             out.lastHoney = out.honey;
 
             let b4=pollenAmount.textContent.length
-            pollenAmount.textContent=MATH.addCommas((out.pollen).toString())+'/'+MATH.addCommas(out.capacity.toString())
+            let hText = out.honey > 1e17 ? '∞' : MATH.addCommas(out.honey.toString());
+            let pText = out.pollen > 1e17 ? '∞' : MATH.addCommas(out.pollen.toString());
+            let cText = out.capacity > 1e17 ? '∞' : MATH.addCommas(out.capacity.toString());
+
+            pollenAmount.textContent = pText + '/' + cText;
             if(pollenAmount2.style) pollenAmount2.textContent = pollenAmount.textContent;
-            honeyAmount.textContent=MATH.addCommas((out.honey).toString())
+            honeyAmount.textContent = hText;
             if(honeyAmount2.style) honeyAmount2.textContent = honeyAmount.textContent;
 
             if(pollenAmount.textContent.length!==b4){
@@ -29274,11 +29301,24 @@ function BeeSwarmSimulator(DATA){
 
             gl.bindBuffer(gl.ARRAY_BUFFER,out.vertBuffer)
             gl.bufferData(gl.ARRAY_BUFFER,Float32Array.from(out.verts),gl.DYNAMIC_DRAW)
-            gl.vertexAttribPointer(glCache.particle_vertPos,3,gl.FLOAT,gl.FALSE,36,0)
-            gl.vertexAttribPointer(glCache.particle_vertColor,4,gl.FLOAT,gl.FALSE,36,12)
-            gl.vertexAttribPointer(glCache.particle_vertSize,1,gl.FLOAT,gl.FALSE,36,28)
-            gl.vertexAttribPointer(glCache.particle_vertRot,1,gl.FLOAT,gl.FALSE,36,32)
+
+            if(!out.vao) {
+                out.vao = gl.createVertexArray()
+                gl.bindVertexArray(out.vao)
+                gl.bindBuffer(gl.ARRAY_BUFFER,out.vertBuffer)
+                gl.enableVertexAttribArray(glCache.particle_vertPos)
+                gl.vertexAttribPointer(glCache.particle_vertPos,3,gl.FLOAT,gl.FALSE,36,0)
+                gl.enableVertexAttribArray(glCache.particle_vertColor)
+                gl.vertexAttribPointer(glCache.particle_vertColor,4,gl.FLOAT,gl.FALSE,36,12)
+                gl.enableVertexAttribArray(glCache.particle_vertSize)
+                gl.vertexAttribPointer(glCache.particle_vertSize,1,gl.FLOAT,gl.FALSE,36,28)
+                gl.enableVertexAttribArray(glCache.particle_vertRot)
+                gl.vertexAttribPointer(glCache.particle_vertRot,1,gl.FLOAT,gl.FALSE,36,32)
+            } else {
+                gl.bindVertexArray(out.vao)
+            }
             gl.drawArrays(gl.POINTS,0,out.verts.length/9)
+            gl.bindVertexArray(null)
 
         }
 
@@ -33163,11 +33203,20 @@ function BeeSwarmSimulator(DATA){
     flowers.mesh.verts=Float32Array.from(verts)
     flowers.mesh.index=index
     flowers.mesh.indexAmount=index.length
+    flowers.mesh.vao=gl.createVertexArray()
 
+    gl.bindVertexArray(flowers.mesh.vao)
     gl.bindBuffer(gl.ARRAY_BUFFER,flowers.mesh.vertBuffer)
     gl.bufferData(gl.ARRAY_BUFFER,flowers.mesh.verts,gl.DYNAMIC_DRAW)
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,flowers.mesh.indexBuffer)
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,Uint16Array.from(flowers.mesh.index),gl.DYNAMIC_DRAW)
+    gl.enableVertexAttribArray(glCache.flower_vertPos)
+    gl.vertexAttribPointer(glCache.flower_vertPos,3,gl.FLOAT,gl.FALSE,32,0)
+    gl.enableVertexAttribArray(glCache.flower_vertUV)
+    gl.vertexAttribPointer(glCache.flower_vertUV,4,gl.FLOAT,gl.FALSE,32,12)
+    gl.enableVertexAttribArray(glCache.flower_vertGoo)
+    gl.vertexAttribPointer(glCache.flower_vertGoo,1,gl.FLOAT,gl.FALSE,32,28)
+    gl.bindVertexArray(null)
 
     for(let i=0;i<25;i++)
     player.addSlot(null)
@@ -33309,6 +33358,7 @@ function BeeSwarmSimulator(DATA){
         let save={}
 
         save.version='2.0.0'
+        save.testMode=player.testMode
         save.extraInfo=player.extraInfo
         save.honey=player.honey
         save.pollen=player.pollen
@@ -33541,6 +33591,7 @@ function BeeSwarmSimulator(DATA){
         player.extraInfo=save.extraInfo
         player.honey=save.honey
         player.pollen=save.pollen
+        player.testMode=save.testMode || window.testMode
         player.currentGear=save.currentGear
         for(let i in player.currentGear)if(i.indexOf('Snail')>-1){player.currentGear[i.replaceAll('Snail','Shell')]=player.currentGear[i].slice();delete player.currentGear[i]}
         player.hive=[[]]
@@ -33699,8 +33750,6 @@ function BeeSwarmSimulator(DATA){
     }
 
     function SAVE_GAME(){
-        if(player.testMode) return;
-
         let code=GENERATE_SAVE_CODE()
 
         //eeeeeeeeeeeeeeeeeeeeeeeeee
@@ -34161,18 +34210,15 @@ function BeeSwarmSimulator(DATA){
 
         gl.uniformMatrix4fv(glCache.flower_viewMatrix,gl.FALSE,player.viewMatrix)
 
-        gl.bindBuffer(gl.ARRAY_BUFFER,flowers.mesh.vertBuffer)
-
-        if(UPDATE_FLOWER_MESH)
+        if(UPDATE_FLOWER_MESH) {
+            gl.bindBuffer(gl.ARRAY_BUFFER,flowers.mesh.vertBuffer)
             gl.bufferData(gl.ARRAY_BUFFER,flowers.mesh.verts,gl.DYNAMIC_DRAW)
+            UPDATE_FLOWER_MESH=false
+        }
 
-        UPDATE_FLOWER_MESH=false
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,flowers.mesh.indexBuffer)
-        gl.vertexAttribPointer(glCache.flower_vertPos,3,gl.FLOAT,gl.FALSE,32,0)
-        gl.vertexAttribPointer(glCache.flower_vertUV,4,gl.FLOAT,gl.FALSE,32,12)
-        gl.vertexAttribPointer(glCache.flower_vertGoo,1,gl.FLOAT,gl.FALSE,32,28)
-
+        gl.bindVertexArray(flowers.mesh.vao)
         gl.drawElements(gl.TRIANGLES,flowers.mesh.indexAmount,gl.UNSIGNED_SHORT,0)
+        gl.bindVertexArray(null)
 
         gl.useProgram(staticGeometryProgram)
 
@@ -34565,10 +34611,11 @@ function BeeSwarmSimulator(DATA){
         window.cancelAnimationFrame(window.parent.raf)
     }
 
-    if (window.testMode) {
-        player.honey = 1e15;
+    if (player.testMode) {
+        player.honey = 1e18;
+        player.capacity = 1e18;
         for (let i in items) {
-            if (items[i] && items[i].amount !== undefined) items[i].amount = 999;
+            items[i].amount = 1e12;
         }
         player.currentGear.tool = 'gummyBaller';
         player.currentGear.backpack = 'coconutCanister';
