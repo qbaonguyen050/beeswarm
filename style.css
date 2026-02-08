@@ -1,492 +1,341 @@
 
-    body{
-        overflow:hidden;
-        margin:0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        user-select:none;
-        background-color: #f0f0f0;
+    body {
+        overflow: hidden;
+        margin: 0;
+        font-family: 'Segoe UI', 'Roboto', 'Comic Sans MS', cursive;
+        user-select: none;
+        background-color: #1a1a1a;
+        color: #fff;
     }
 
     input {
-        height:24px;
-        outline:none;
-        background-color:rgb(255,255,255);
-        border:1px solid #ccc;
+        height: 28px;
+        outline: none;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
         transition: all 0.3s ease;
-        border-radius:5px;
-        padding: 2px 8px;
+        border-radius: 8px;
+        padding: 4px 10px;
+        color: #fff;
     }
 
     input:focus {
-        border-color: #4CAF50;
-        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        border-color: #ffcc00;
+        background-color: rgba(255, 255, 255, 0.2);
     }
 
     button {
-        min-width:60px;
-        height:30px;
-        transition: all 0.3s ease;
-        border-radius:8px;
-        font-size:14px;
-        font-weight: 600;
-        background-color: #ffffff;
-        border: 1px solid #ddd;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        min-width: 80px;
+        height: 36px;
+        transition: all 0.2s ease;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+        border: 3px solid #666;
+        color: #333;
+        box-shadow: 0 4px 0 #444;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        margin: 4px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
     button:hover {
-        background-color: #e8f5e9;
-        border-color: #81c784;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        transform: translateY(-1px);
+        background: linear-gradient(to bottom, #f0f0f0 0%, #d0d0d0 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 0 #444;
     }
 
     button:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transform: translateY(2px);
+        box-shadow: 0 2px 0 #444;
     }
 
     #purchaseButton {
-        transition: background-color 0.3s ease;
-        border:none;
-        background-color: #4CAF50;
+        background: linear-gradient(to bottom, #4caf50 0%, #388e3c 100%);
         color: white;
+        border-color: #1b5e20;
+        box-shadow: 0 4px 0 #1b5e20;
     }
 
     #purchaseButton:hover {
-        background-color: #45a049;
+        background: linear-gradient(to bottom, #66bb6a 0%, #43a047 100%);
     }
 
-    #leftShopButton:hover,#rightShopButton:hover{
-        background-color: #e0e0e0;
+    #gl-canvas, #tex-canvas {
+        display: none;
     }
 
-    #gl-canvas,#tex-canvas{
-        display:none;
-	}
-
-	#ui-canvas{
-        position:fixed;
-        left:0;
-        top:0;
+    #ui-canvas {
+        position: fixed;
+        left: 0;
+        top: 0;
         z-index: -1;
         pointer-events: auto;
-	}
-
-	div::-webkit-scrollbar{
-        width:6px;
-        height:8px;
-        background-color: transparent;
     }
 
-    div::-webkit-scrollbar-thumb{
-        background: #bbb;
-        border-radius:10px;
+    div::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    div::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    }
+
+    div::-webkit-scrollbar-thumb {
+        background: #ffcc00;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
     }
 
     div::-webkit-scrollbar-thumb:hover {
-        background: #999;
-    }
-
-    #roboActiveUpgrades::-webkit-scrollbar-thumb{
-        background:rgb(40,80,40);
+        background: #ffdb4d;
     }
 
     #inventoryButton, #questButton, #beesButton, #settingsButton, #beequipButton, #catalogButton {
-        background-color: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(4px);
-        border-radius: 6px;
-        transition: all 0.2s ease;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        border-radius: 10px;
+        transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 3px solid #ffcc00;
+        box-sizing: border-box;
     }
 
-    #inventoryButton:hover,#questButton:hover,#beesButton:hover,#settingsButton:hover,#beequipButton:hover,#catalogButton:hover{
-        background-color: rgba(255, 255, 255, 0.4);
-        transform: scale(1.1);
-        cursor:pointer;
+    #inventoryButton:hover, #questButton:hover, #beesButton:hover, #settingsButton:hover, #beequipButton:hover, #catalogButton:hover {
+        background-color: rgba(255, 204, 0, 0.3);
+        transform: scale(1.15) rotate(5deg);
+        cursor: pointer;
     }
 
-    #feedThisAmount{
-        margin-top:50px;
-        margin-left:5px;
-        border-radius:6px;
-        position:fixed;
-        background-color: #2e7d32;
-        border:none;
-        color:white;
-        font-size:16px;
-        padding: 5px 15px;
-    }
-
-    #feedUntilGifted{
-        margin-top:100px;
-        margin-left:160px;
-        border-radius:6px;
-        position:fixed;
-        background-color: #fbc02d;
-        border:none;
-        color: #333;
-        font-size:14px;
-        width:135px;
-        font-weight: bold;
-    }
-
-    #feedThisAmount:hover{
-        background-color: #1b5e20;
-    }
-
-    #feedAmount,#blenderCraftAmount,#shrineAmount{
-        margin-top:50px;
-        margin-left:75px;
-        border-radius:6px;
-        position:fixed;
-        background-color: #1565c0;
-        border:none;
-        color:white;
-        font-size:16px;
-        height:24px;
-        width:200px;
-        padding:5px 10px;
-    }
-
-    #cancelFeeding{
-        margin-top:100px;
-        margin-left:5px;
-        border-radius:6px;
-        position:fixed;
-        background-color: #d32f2f;
-        border:none;
-        color:white;
-        font-size:16px;
-        width:70px;
-    }
-
-    #cancelFeeding:hover{
-        background-color: #c62828;
-    }
-
-    #actionHoverDarken:hover{
-        background-color: rgba(0,0,0,0.1);
-    }
-
-    #blenderX{
-        background-color: #f44336;
-        color: white;
-    }
-
-    #blenderX:hover{
-        background-color: #d32f2f;
-    }
-
-    #leftBlenderButton,#rightBlenderButton{
-        background-color: #2196f3;
-    }
-
-    #blenderCraft{
-        background-color: #4caf50;
-        color: white;
-    }
-
-    #blenderCraft:hover{
-        background-color: #388e3c;
-    }
-
-    #leftBlenderButton:hover,#rightBlenderButton:hover{
-        background-color: #1976d2;
-    }
-
-    #shrineX:hover{
-        background-color: #d32f2f;
-    }
-
-    #shrineX{
-        background-color: #f44336;
-        color: white;
-    }
-
-    #shrineDonate{
-        background-color: #4caf50;
-        color: white;
-    }
-
-    #shrineDonate:hover{
-        background-color: #388e3c;
-    }
-
-    #shrineLeft:hover,#shrineRight:hover{
-        background: rgba(0,0,0,0.05);
-    }
-
-    svg{
-        pointer-events:auto;
-    }
-
-    #gearInfoList{
-        display:inline-flex;
-        flex-wrap: wrap;
-        gap: 5px;
-    }
-
-    /* Improved UI containers */
     .uiPage {
-        border-radius: 12px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        border: 2px solid rgba(255,255,255,0.2);
-        backdrop-filter: blur(12px);
-        background-color: rgba(255, 255, 255, 0.15) !important;
+        border-radius: 16px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        border: 4px solid #1e46ff;
+        backdrop-filter: blur(16px);
+        background: rgba(10, 20, 50, 0.85) !important;
         color: #fff !important;
+        padding: 10px !important;
     }
 
-    .uiPage div {
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-    }
-
-    ::-webkit-scrollbar {
-        width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-        background: rgba(0,0,0,0.1);
+    .uiPage svg {
+        transition: all 0.2s ease;
         border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: rgba(255,255,255,0.3);
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: rgba(255,255,255,0.5);
+        margin-bottom: 5px;
     }
 
-    #mainMenu button {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border: none;
+    .uiPage svg:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        transform: scale(1.03);
     }
 
+    #abilityUI {
+        filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
+    }
+
+    #UIBar {
+        background: rgba(0, 0, 0, 0.6) !important;
+        border: 3px solid #ffcc00;
+        border-radius: 12px !important;
+        padding: 6px !important;
+        display: flex;
+        gap: 8px;
+        width: auto !important;
+    }
+
+    /* Stats Bar Overhaul */
     #honeyAndPollenAmount {
-        filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+        position: fixed;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 30px;
+        z-index: 100;
+        pointer-events: none;
     }
 
-    .stat-box:first-child {
-        border-color: rgba(255, 215, 0, 0.4);
+    .stat-box {
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(12px);
+        border: 3px solid #ffcc00;
+        border-radius: 15px;
+        padding: 10px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 180px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
     }
 
     .stat-box:last-child {
-        border-color: rgba(76, 175, 80, 0.4);
+        border-color: #4caf50;
     }
 
-.no-saves-message {
-    text-align: center;
-    color: rgb(60, 60, 60);
-    padding: 20px;
-}
+    .stat-label {
+        font-size: 14px;
+        font-weight: 900;
+        color: #ffdb4d;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 5px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
 
-.save-code-display {
-    font-size: 10px;
-    font-family: 'Trebuchet MS', sans-serif;
-    word-break: break-all;
-    padding: 10px;
-    user-select: text;
-}
+    .stat-box:last-child .stat-label {
+        color: #81c784;
+    }
 
-.save-item {
-    margin: 0 auto 15px auto;
-    width: 500px;
-    height: 90px;
-    border-radius: 8px;
-    border: 4px solid rgb(180, 160, 0);
-    background-color: rgb(250, 230, 50);
-    display: flex;
-    flex-direction: column;
-    padding: 8px;
-    box-sizing: border-box;
-    position: relative;
-}
+    .stat-value {
+        font-size: 24px;
+        font-weight: 800;
+        color: #fff;
+        text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+    }
 
-.save-name-input {
-    font-size: 20px;
-    background-color: rgba(0, 0, 0, 0.05);
-    border: none;
-    font-family: 'Comic Sans MS', cursive;
-    padding: 2px 5px;
-    width: 250px;
-}
+    #honeyAmount {
+        color: #ffd700;
+    }
 
-.save-date {
-    margin-top: 5px;
-    font-size: 13px;
-    color: rgb(60, 60, 60);
-}
+    .pollen-container {
+        width: 100%;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        margin-top: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+    }
 
-.save-buttons-container {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    gap: 8px;
-}
+    .pollen-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #4caf50, #a8e063);
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-.save-btn {
-    width: 60px;
-    height: 30px;
-    border-radius: 6px;
-    border: 2px solid black;
-    text-align: center;
-    line-height: 26px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: transform 0.1s;
-}
+    #pollenAmount {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 900;
+        color: #fff;
+        text-shadow: 1px 1px 2px #000;
+    }
 
-.save-btn:active {
-    transform: scale(0.95);
-}
+    /* Loading Screen */
+    #loadingScreen {
+        background: radial-gradient(circle, #ffcc00 0%, #ff9900 100%);
+    }
 
-.play-btn { background-color: rgb(50, 210, 50); }
-.export-btn { background-color: rgb(195, 100, 255); }
-.delete-btn { background-color: rgb(210, 50, 50); }
+    #loadingScreen h1 {
+        font-size: 60px;
+        letter-spacing: 4px;
+        animation: pulse 2s infinite ease-in-out;
+    }
 
-.error-message {
-    text-align: center;
-    color: rgb(150, 0, 0);
-    font-weight: bold;
-}
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
 
-/* Modern BSS Style Additions */
-#loadingScreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
+    /* Dialogue and Shops */
+    #dialogueBox, #shopUI > div, #blenderMenu, #shrineMenu, #roboMenu {
+        border: 4px solid #1e46ff !important;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8) !important;
+        background-color: rgba(10, 30, 100, 0.9) !important;
+    }
 
-.loading-content {
-    text-align: center;
-}
+    #NPCName, #NPCDialogue, #itemName, #itemDesc, #itemCostSVG {
+        background-color: rgba(0, 0, 0, 0.4) !important;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+    }
 
-.loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgba(255,255,255,0.3);
-    border-radius: 50%;
-    border-top-color: #fff;
-    animation: spin 1s ease-in-out infinite;
-    margin: 20px auto;
-}
+    /* Main Menu Buttons */
+    #mainMenu button {
+        border: 4px solid #666;
+        border-radius: 15px;
+        box-shadow: 0 8px 0 #444;
+        transition: all 0.1s ease;
+    }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
+    #mainMenu button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 0 #444;
+    }
 
-/* Stats Bar */
-#honeyAndPollenAmount {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 20px;
-    z-index: 100;
-    pointer-events: none;
-    width: auto;
-}
+    #mainMenu button:active {
+        transform: translateY(4px);
+        box-shadow: 0 4px 0 #444;
+    }
 
-.stat-box {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 8px 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 150px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
+    #mainPlay {
+        background: linear-gradient(to bottom, #4caf50, #2e7d32) !important;
+        border-color: #1b5e20 !important;
+        box-shadow: 0 8px 0 #0d3b0f !important;
+        color: white !important;
+    }
 
-.stat-label {
-    font-size: 12px;
-    font-weight: bold;
-    color: #ccc;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-}
+    #mainTest {
+        background: linear-gradient(to bottom, #9c27b0, #7b1fa2) !important;
+        border-color: #4a148c !important;
+        box-shadow: 0 8px 0 #2e0b57 !important;
+        color: white !important;
+    }
 
-.stat-value {
-    font-size: 20px;
-    font-weight: 800;
-    color: #fff;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
+    #mainInfo {
+        background: linear-gradient(to bottom, #f44336, #c62828) !important;
+        border-color: #8e1c14 !important;
+        box-shadow: 0 8px 0 #5c110b !important;
+        color: white !important;
+    }
 
-#honeyAmount {
-    color: #ffd700;
-}
+    #mainNew {
+        background: linear-gradient(to bottom, #2196f3, #1565c0) !important;
+        border-color: #0d47a1 !important;
+        box-shadow: 0 8px 0 #082d66 !important;
+        color: white !important;
+    }
 
-.pollen-container {
-    width: 100%;
-    height: 14px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 7px;
-    overflow: hidden;
-    position: relative;
-    margin-top: 5px;
-    border: 1px solid rgba(255,255,255,0.2);
-}
+    /* Health Bar */
+    .health-overlay {
+        border: 3px solid #ffcc00;
+        box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+        background: rgba(0, 0, 0, 0.8);
+        pointer-events: none;
+    }
 
-.pollen-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #4caf50, #8bc34a);
-    transition: width 0.3s ease;
-}
+    #healthBar {
+        background: linear-gradient(90deg, #ff5252, #f44336);
+    }
 
-#pollenAmount {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    text-align: center;
-    font-size: 10px;
-    font-weight: 700;
-    pointer-events: none;
-    color: #fff;
-    text-shadow: 0 0 2px #000;
-}
+    /* Hotbar */
+    .hotbarSlot {
+        background: rgba(0, 0, 0, 0.6);
+        border: 4px solid #ffcc00 !important;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
 
-/* Health Bar Overlay */
-.health-overlay {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 15px;
-    background: rgba(0,0,0,0.5);
-    border: 2px solid #fff;
-    border-radius: 10px;
-    overflow: hidden;
-}
+    /* Joysticks */
+    #joystickOutline {
+        border: 6px solid rgba(255, 204, 0, 0.4) !important;
+    }
 
-#healthBar {
-    height: 100%;
-    width: 100%;
-    background: #ff0000;
-    transition: width 0.2s;
-}
+    #joystick {
+        background: #ffcc00 !important;
+        border: 4px solid rgba(0, 0, 0, 0.2) !important;
+    }
