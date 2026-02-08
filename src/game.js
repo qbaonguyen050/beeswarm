@@ -1,6 +1,7 @@
 function BeeSwarmSimulator(DATA){
     try {
 
+    window.testMode = DATA.testMode || window.testMode;
     var player, out, NPCs = {};
     let Math=_M,width=window.thisProgramIsInFullScreen?500:window.innerWidth+1,height=window.thisProgramIsInFullScreen?500:window.innerHeight+1,half_width=width*0.5,half_height=height*0.5,aspect=width/height,FETCHED_CODE={},beeCanvas,UPDATE_FLOWER_MESH=true,GIFTED_BEE_TEXTURE_OFFSET=768/2048
 
@@ -20020,6 +20021,15 @@ function BeeSwarmSimulator(DATA){
 
                     if(physics){
 
+                        if (_col === true || (typeof _col === 'string' && player.testMode)) {
+                            physics = false;
+                            if (_col === true || player.testMode) mesh = false;
+                        }
+
+                    }
+
+                    if(physics){
+
                         let B=new CANNON.Body({
 
                             shape:new CANNON.Box(new CANNON.Vec3(w*0.5,h*0.5,l*0.5)),
@@ -21787,6 +21797,7 @@ function BeeSwarmSimulator(DATA){
 
     player=(function(o){
         let out = o;
+        out.testMode = window.testMode;
 
         out.autoRJSettings={until:'rare',gifted:false}
 
@@ -21827,21 +21838,21 @@ function BeeSwarmSimulator(DATA){
                 if(beeInfo[out.discoveredBees[i]].rarity==='legendary') legendaryTypes++
             }
 
-            out.restrictionInfo.allowed_5=amountOfBees>=5?true:'You need 5 bees to enter the 5 Bee Zone!'
-            out.restrictionInfo.allowed_10=amountOfBees>=10?true:'You need 10 bees to enter the 10 Bee Zone!'
-            out.restrictionInfo.allowed_15=amountOfBees>=15?true:'You need 15 bees to enter the 15 Bee Zone!'
-            out.restrictionInfo.allowed_20=amountOfBees>=20?true:'You need 20 bees to enter the 20 Bee Zone!'
-            out.restrictionInfo.allowed_25=amountOfBees>=25?true:'You need 25 bees to enter the 25 Bee Zone!'
-            out.restrictionInfo.allowed_30=amountOfBees>=30?true:'You need 30 bees to enter the 30 Bee Zone!'
-            out.restrictionInfo.allowed_35=amountOfBees>=35?true:'You need 35 bees to enter the 35 Bee Zone!'
-            out.restrictionInfo.allowed_redHQ=redTypes>=4?true:'Discover 4 red bee types to enter the Red HQ!'
-            out.restrictionInfo.allowed_blueHQ=blueTypes>=4?true:'Discover 4 blue bee types to enter the Blue HQ!'
-            out.restrictionInfo.allowed_sprinkler=legendaryTypes>=1?true:'Discover 1 legendary bee type to enter the Sprinkler Shop!'
-            out.restrictionInfo.allowed_ace=epicTypes>=5?true:'Discover 5 epic bee types to enter the Ace Shop!'
-            out.restrictionInfo.allowed_dapper=out.currentGear.mask!=='helmet'&&out.currentGear.mask!=='none'&&out.currentGear.boots!=='basicBoots'&&out.currentGear.boots!=='none'?true:'You must wear a nice hat and cool boots to enter the Dapper Shop!'
-            out.restrictionInfo.allowed_cocoCave=!out.extraInfo.mob_coco||out.extraInfo.mob_coco<=0
+            out.restrictionInfo.allowed_5=(amountOfBees>=5 || out.testMode)?true:'You need 5 bees to enter the 5 Bee Zone!'
+            out.restrictionInfo.allowed_10=(amountOfBees>=10 || out.testMode)?true:'You need 10 bees to enter the 10 Bee Zone!'
+            out.restrictionInfo.allowed_15=(amountOfBees>=15 || out.testMode)?true:'You need 15 bees to enter the 15 Bee Zone!'
+            out.restrictionInfo.allowed_20=(amountOfBees>=20 || out.testMode)?true:'You need 20 bees to enter the 20 Bee Zone!'
+            out.restrictionInfo.allowed_25=(amountOfBees>=25 || out.testMode)?true:'You need 25 bees to enter the 25 Bee Zone!'
+            out.restrictionInfo.allowed_30=(amountOfBees>=30 || out.testMode)?true:'You need 30 bees to enter the 30 Bee Zone!'
+            out.restrictionInfo.allowed_35=(amountOfBees>=35 || out.testMode)?true:'You need 35 bees to enter the 35 Bee Zone!'
+            out.restrictionInfo.allowed_redHQ=(redTypes>=4 || out.testMode)?true:'Discover 4 red bee types to enter the Red HQ!'
+            out.restrictionInfo.allowed_blueHQ=(blueTypes>=4 || out.testMode)?true:'Discover 4 blue bee types to enter the Blue HQ!'
+            out.restrictionInfo.allowed_sprinkler=(legendaryTypes>=1 || out.testMode)?true:'Discover 1 legendary bee type to enter the Sprinkler Shop!'
+            out.restrictionInfo.allowed_ace=(epicTypes>=5 || out.testMode)?true:'Discover 5 epic bee types to enter the Ace Shop!'
+            out.restrictionInfo.allowed_dapper=(out.currentGear.mask!=='helmet'&&out.currentGear.mask!=='none'&&out.currentGear.boots!=='basicBoots'&&out.currentGear.boots!=='none' || out.testMode)?true:'You must wear a nice hat and cool boots to enter the Dapper Shop!'
+            out.restrictionInfo.allowed_cocoCave=(!out.extraInfo.mob_coco||out.extraInfo.mob_coco<=0 || out.testMode)
 
-            out.restrictionInfo.hasStickbug=!out.activeStickbug
+            out.restrictionInfo.hasStickbug=(!out.activeStickbug || out.testMode)
         }
 
         out.endRoboChallenge=function(){
@@ -25353,9 +25364,9 @@ function BeeSwarmSimulator(DATA){
             out.lastHoney = out.honey;
 
             let b4=pollenAmount.textContent.length
-            let hText = out.honey > 1e17 ? '∞' : MATH.addCommas(out.honey.toString());
-            let pText = out.pollen > 1e17 ? '∞' : MATH.addCommas(out.pollen.toString());
-            let cText = out.capacity > 1e17 ? '∞' : MATH.addCommas(out.capacity.toString());
+            let hText = (out.honey > 1e17 || out.testMode) ? '∞' : MATH.addCommas(out.honey.toString());
+            let pText = (out.pollen > 1e17 || out.testMode) ? '∞' : MATH.addCommas(out.pollen.toString());
+            let cText = (out.capacity > 1e17 || out.testMode) ? '∞' : MATH.addCommas(out.capacity.toString());
 
             pollenAmount.textContent = pText + '/' + cText;
             if(pollenAmount2.style) pollenAmount2.textContent = pollenAmount.textContent;
@@ -34631,6 +34642,7 @@ function BeeSwarmSimulator(DATA){
 
     if (player.testMode) {
         player.honey = 1e18;
+        player.pollen = 1e18;
         player.capacity = 1e18;
         for (let i in items) {
             items[i].amount = 1e12;

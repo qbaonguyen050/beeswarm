@@ -66,7 +66,7 @@ async function runMain(){
     document.getElementById('mainTest').onclick=function(){
         window.testMode = true;
         document.getElementById('mainMenu').style.display='none'
-        BeeSwarmSimulator({id:Date.now(),name:'Test Mode Save'})
+        BeeSwarmSimulator({id:Date.now(),name:'Test Mode Save',testMode:true})
     }
 
     document.getElementById('mainPlay').onclick=function(){

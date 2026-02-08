@@ -1,8 +1,10 @@
 
+    @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
     body {
         overflow: hidden;
         margin: 0;
-        font-family: 'Segoe UI', 'Roboto', 'Comic Sans MS', cursive;
+        font-family: 'Luckiest Guy', 'Segoe UI', 'Roboto', 'Comic Sans MS', cursive;
         user-select: none;
         background-color: #1a1a1a;
         color: #fff;
